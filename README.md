@@ -9,19 +9,23 @@
 **单文件离线刷题页**：复习/考试双模式、逐题解析与来源证据展开、错题重做与前后对比、
 按考点的学习报告、学习记录导出导入。全程本地处理，答题记录只存在你的浏览器里。
 
-## v2.1 核心升级：强制质量门禁
+## v2.2 核心升级：反伪造核验与三维状态契约
 
-**未通过核验的题库，现在无法冒充正式交付物**：
+**未通过核验的题库，现在不仅无法冒充正式交付，也无法伪造“已验证”**：
 
-- `build` 默认 strict 门禁：结构失败 / 来源定位失败 / 缺少材料清单 / 语义复核未通过
-  → 直接阻断、退出码非零、不产出文件，并清理同题库陈旧产物
-- 每次构建/核验都落盘机器可读的 `validation-report.json`（逐条 findings + 逐题三层矩阵）
-- 显式 `--mode preview` 才能产出草稿：文件名、MD 头部、页面横幅、报告四处标注
-  「草稿·未通过完整核验」，无法被误认为正式交付
-- 图片路径安全：`../` 穿越、绝对路径、外链、伪装扩展名一律拦截
-- 解析-答案矛盾自动检测（如解析写"故选B"但答案是 A）
-- 考试状态机重做：每次开考新试卷 ID、中途刷新恢复、重复交卷守卫、旧卷成绩快照回看
-- 学习记录导入 Schema 校验：非法记录拒绝且不动现有状态；v2 旧记录自动迁移
+- **逐题门禁**：只要有一题缺证据字段（source_id/segment_id/source_quote/evidence_status），
+  strict 构建即阻断——不能借其他题通过而放行（B-EVIDENCE-REQUIRED）
+- **反伪造**：展示引用（source_ref）与 manifest 真实定位交叉核对，页码/段落矛盾即 FAIL
+  （B-REF-CONFLICT）；材料文件 SHA-256 重新核验，材料被替换即阻断（B-SOURCE-HASH）
+- **三维状态契约**：validation_status（PASS/WARN/FAIL/NOT_VERIFIED）、
+  release_status（READY/DRAFT_ONLY/BLOCKED）与 checks[] 执行状态分离，
+  `validation-report.json`（schema@2.2）机器可读、退出码与结论不矛盾
+- **原子化构建**：临时目录完整渲染自检通过后才提交；失败零半成品，旧正式产物保留
+  并整版警告（不静默删除、不让人误认）
+- **统一 Schema 入口**：顶层数组/null、questions 混入字符串/数字、损坏 JSON、超大输入
+  均给出稳定错误编号与位置，绝不 Traceback
+- 保留 v2.1 全部能力：强制门禁、preview 草稿四处标注、图片路径安全、解析-答案矛盾检测、
+  考试状态机、导入 Schema 校验
 
 ## 安装
 
@@ -83,7 +87,7 @@ Python 3 标准库即可运行核心功能；PDF 文本提取需 `pip install pd
 ## 文件结构
 
 ```
-courseware-quiz-builder/
+skill-src/courseware-quiz-builder/      # 技能本体（dist ZIP 即此目录内容）
 ├── SKILL.md                          # 技能主文件（触发/工作流/门禁说明）
 ├── scripts/
 │   ├── extract_text.py               # 材料解析器（manifest/证据链/边界文件诚实报错）
