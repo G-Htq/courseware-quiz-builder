@@ -1,0 +1,1605 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>刷题页</title>
+<style>
+  :root {
+    --bg: #f4f7fb; --card: #ffffff; --ink: #1f2937; --muted: #64748b;
+    --line: #e2e8f0; --brand: #2563eb; --brand-deep: #1e40af; --brand-soft: #eff6ff;
+    --ok: #16a34a; --ok-soft: #f0fdf4; --bad: #dc2626; --bad-soft: #fef2f2;
+    --warn: #d97706; --warn-soft: #fffbeb; --teal: #0d9488; --teal-soft: #f0fdfa;
+    --shadow: 0 1px 3px rgba(15, 23, 42, .06), 0 4px 14px rgba(15, 23, 42, .05);
+    --radius: 14px;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font-family: "PingFang SC", "Microsoft YaHei", "Segoe UI", system-ui, sans-serif;
+         line-height: 1.6; }
+  button { font-family: inherit; }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 16px; }
+
+  /* ---------- 顶部 ---------- */
+  header { background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 70%, #0d9488 130%); color: #fff;
+           padding: 26px 16px 20px; }
+  header .crumb { font-size: 12.5px; opacity: .85; margin-bottom: 6px; cursor: pointer; user-select: none; }
+  header h1 { margin: 0 0 8px; font-size: 21px; line-height: 1.45; font-weight: 700; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { background: rgba(255,255,255,.16); border-radius: 999px; padding: 3px 12px; font-size: 12.5px; }
+
+  /* ---------- 通用 ---------- */
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+          box-shadow: var(--shadow); padding: 18px; margin-bottom: 14px; }
+  .btn { border: 1px solid var(--line); background: #fff; color: var(--ink); border-radius: 10px;
+         padding: 9px 16px; font-size: 14px; cursor: pointer; min-height: 40px; transition: border-color .15s; }
+  .btn:hover { border-color: var(--brand); color: var(--brand); }
+  .btn.primary { background: var(--brand); border-color: var(--brand); color: #fff; font-weight: 600; }
+  .btn.primary:hover { background: var(--brand-deep); color: #fff; }
+  .btn.ghost-teal { border-color: #99f6e4; color: var(--teal); background: var(--teal-soft); }
+  .btn.danger { color: var(--bad); }
+  .btn.danger:hover { border-color: var(--bad); }
+  .btn.sm { padding: 5px 10px; min-height: 32px; font-size: 12.5px; border-radius: 8px; }
+  .btn.on { background: var(--brand); border-color: var(--brand); color: #fff; }
+  .btn:disabled { opacity: .55; cursor: default; }
+  .row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .muted { color: var(--muted); font-size: 12.5px; }
+  .banner { background: var(--warn-soft); border: 1px solid #fde68a; color: #92400e; border-radius: 10px;
+            padding: 10px 14px; font-size: 13px; margin: 12px 0; }
+  .empty { text-align: center; color: var(--muted); padding: 44px 0; font-size: 14px; }
+  main { padding: 18px 0 70px; }
+  footer { text-align: center; color: var(--muted); font-size: 12px; padding: 0 0 34px; }
+
+  /* ---------- 徽标 ---------- */
+  .badge { font-size: 11.5px; border-radius: 6px; padding: 2px 8px; font-weight: 600; white-space: nowrap; }
+  .qid { background: #111827; color: #fff; }
+  .t-single { background: #dbeafe; color: #1d4ed8; }
+  .t-multiple { background: #ede9fe; color: #6d28d9; }
+  .t-judge { background: #d1fae5; color: #047857; }
+  .t-short { background: #fef3c7; color: #b45309; }
+  .d-易 { background: #dcfce7; color: #15803d; }
+  .d-中 { background: #fef3c7; color: #b45309; }
+  .d-难 { background: #fee2e2; color: #b91c1c; }
+  .topic { background: var(--brand-soft); color: var(--brand); }
+  .ev-ok { background: var(--ok-soft); color: var(--ok); }
+  .ev-warn { background: var(--warn-soft); color: var(--warn); }
+  .ev-bad { background: var(--bad-soft); color: var(--bad); }
+  .ev-none { background: #f1f5f9; color: var(--muted); }
+
+  /* ---------- 首页 ---------- */
+  .hero-cta { display: flex; flex-wrap: wrap; gap: 12px; margin: 16px 0 4px; }
+  .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-top: 14px; }
+  .stat { background: var(--brand-soft); border-radius: 12px; padding: 12px 14px; }
+  .stat b { display: block; font-size: 22px; color: var(--brand-deep); }
+  .stat span { font-size: 12px; color: var(--muted); }
+  .topic-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .topic-pill { border: 1px solid var(--line); border-radius: 999px; padding: 5px 13px; font-size: 13px;
+                background: #fff; cursor: pointer; }
+  .topic-pill:hover { border-color: var(--brand); color: var(--brand); }
+  .topic-pill.on { background: var(--brand); color: #fff; border-color: var(--brand); }
+
+  /* ---------- 筛选栏 ---------- */
+  .toolbar { position: sticky; top: 0; z-index: 10; background: rgba(255,255,255,.97);
+             border-bottom: 1px solid var(--line); padding: 9px 0; backdrop-filter: blur(4px); }
+  .toolbar .wrap { display: flex; flex-wrap: wrap; gap: 7px; align-items: center; }
+  .progress { margin-left: auto; font-size: 12.5px; color: var(--muted); white-space: nowrap; }
+
+  /* ---------- 题卡 ---------- */
+  .qcard { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+           box-shadow: var(--shadow); padding: 18px; }
+  .qcard.right { border-color: #86efac; }
+  .qcard.wrong { border-color: #fca5a5; }
+  .qhead { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 10px; }
+  .qhead .flagbtn { margin-left: auto; }
+  .stem { font-size: 15px; line-height: 1.75; margin: 6px 0 12px; white-space: pre-wrap; }
+  .qimg { max-width: 100%; border-radius: 10px; border: 1px solid var(--line); display: block;
+          margin: 8px 0 12px; }
+  .opt { display: block; width: 100%; text-align: left; border: 1.5px solid var(--line);
+         background: #fff; border-radius: 11px; padding: 12px 14px; margin-bottom: 9px;
+         font-size: 14.5px; line-height: 1.6; cursor: pointer; min-height: 46px; }
+  .opt:hover:not(:disabled) { border-color: var(--brand); background: #f8fafc; }
+  .opt.sel { border-color: var(--brand); background: var(--brand-soft); font-weight: 600; }
+  .opt.ok { border-color: var(--ok); background: var(--ok-soft); }
+  .opt.no { border-color: var(--bad); background: var(--bad-soft); }
+  .opt:disabled { cursor: default; }
+  .opt .tag { float: right; font-size: 12px; font-weight: 700; margin-left: 8px; }
+  .opt .tag.okc { color: var(--ok); }
+  .opt .tag.noc { color: var(--bad); }
+  .opt img { display: block; max-width: 100%; margin-top: 8px; border-radius: 8px; border: 1px solid var(--line); }
+  textarea.answer { width: 100%; min-height: 96px; border: 1.5px solid var(--line); border-radius: 11px;
+                    padding: 11px; font-size: 14px; font-family: inherit; resize: vertical; }
+  textarea.answer:focus { outline: 2px solid var(--brand-soft); border-color: var(--brand); }
+  .explain { margin-top: 12px; background: var(--bg); border-radius: 11px; padding: 12px 14px;
+             font-size: 13.5px; line-height: 1.75; }
+  .explain .ref { color: var(--muted); font-size: 12.5px; margin-top: 6px; }
+  details.evi { margin-top: 10px; border: 1px dashed #cbd5e1; border-radius: 10px;
+                background: #f8fafc; padding: 8px 12px; font-size: 13px; }
+  details.evi summary { cursor: pointer; color: var(--brand-deep); font-weight: 600; font-size: 12.5px;
+                        user-select: none; }
+  details.evi .quote { margin: 8px 0 4px; padding: 8px 10px; background: #fff; border-left: 3px solid var(--brand);
+                       border-radius: 0 8px 8px 0; font-size: 13px; }
+  .refbox { margin-top: 10px; border: 1px dashed var(--warn); background: var(--warn-soft);
+            border-radius: 10px; padding: 11px 13px; font-size: 13.5px; line-height: 1.7; }
+  .selfbtns { margin-top: 8px; display: flex; gap: 8px; flex-wrap: wrap; }
+
+  /* ---------- 导航 ---------- */
+  .qnav { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+  .palette { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+  .pal { width: 40px; height: 36px; border: 1px solid var(--line); border-radius: 9px; background: #fff;
+         font-size: 12.5px; cursor: pointer; position: relative; }
+  .pal.answered { background: var(--brand-soft); border-color: #bfdbfe; color: var(--brand-deep); }
+  .pal.right { background: var(--ok-soft); border-color: #86efac; color: var(--ok); }
+  .pal.wrong { background: var(--bad-soft); border-color: #fca5a5; color: var(--bad); }
+  .pal.cur { outline: 2.5px solid var(--brand); outline-offset: 1px; font-weight: 700; }
+  .pal .star { position: absolute; top: -6px; right: -4px; font-size: 11px; color: var(--warn); }
+
+  /* ---------- 成绩/报告 ---------- */
+  .score { font-size: 32px; font-weight: 700; color: var(--brand); }
+  .score small { font-size: 14px; color: var(--muted); font-weight: 400; }
+  .sum-grid { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+  .sum-item { background: var(--bg); border-radius: 9px; padding: 8px 13px; font-size: 13px; }
+  .sum-item b { font-size: 14.5px; }
+  .bar { height: 9px; background: #e2e8f0; border-radius: 999px; overflow: hidden; margin-top: 6px; }
+  .bar > i { display: block; height: 100%; background: linear-gradient(90deg, var(--brand), var(--teal)); }
+  .bar > i.low { background: linear-gradient(90deg, #f59e0b, var(--bad)); }
+  .mrow { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px dashed var(--line);
+          font-size: 13.5px; }
+  .mrow:last-child { border-bottom: none; }
+  .mrow .name { flex: 0 0 170px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .mrow .bar { flex: 1; margin-top: 0; }
+  .mrow .pct { flex: 0 0 90px; text-align: right; color: var(--muted); font-size: 12.5px; }
+  table.hist { width: 100%; border-collapse: collapse; font-size: 13px; }
+  table.hist th, table.hist td { padding: 7px 8px; border-bottom: 1px solid var(--line); text-align: left; }
+  table.hist th { color: var(--muted); font-weight: 600; font-size: 12px; }
+  .verdict { font-size: 13px; margin-top: 8px; }
+
+  /* ---------- 错题中心 ---------- */
+  .wgroup h3 { margin: 18px 0 8px; font-size: 14.5px; color: var(--brand-deep); }
+  .witem { border: 1px solid #fecaca; background: #fff; border-radius: 12px; padding: 14px; margin-bottom: 10px; }
+  .witem.fixed { border-color: #bbf7d0; }
+  .whead { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 8px; }
+  .why { font-size: 13px; background: var(--bad-soft); border-radius: 8px; padding: 8px 10px; margin: 8px 0; }
+  .why b { color: var(--bad); }
+  .chain { font-size: 12.5px; color: var(--muted); margin-top: 8px; word-break: break-all; }
+
+  /* ---------- 响应式 ---------- */
+  @media (max-width: 720px) {
+    header { padding: 20px 12px 16px; }
+    header h1 { font-size: 18px; }
+    .wrap { padding: 0 12px; }
+    .qcard, .card { padding: 14px; border-radius: 12px; }
+    .opt { font-size: 14px; padding: 11px 12px; }
+    .pal { width: 36px; height: 34px; }
+    .mrow .name { flex-basis: 105px; font-size: 12.5px; }
+    .mrow .pct { flex-basis: 70px; }
+    .progress { margin-left: 0; width: 100%; }
+    .qnav .btn { flex: 1; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="crumb" id="crumb" onclick="goHome()">课件智练</div>
+    <h1 id="quiz-title">刷题页</h1>
+    <div class="chips" id="quiz-meta"></div>
+  </div>
+</header>
+
+<div class="toolbar" id="toolbar" hidden>
+  <div class="wrap" id="toolbar-inner"></div>
+</div>
+
+<main>
+  <div class="wrap">
+    <div class="banner" id="gate-banner" hidden></div>
+    <div class="banner" id="storage-banner" hidden></div>
+    <section id="view"></section>
+  </div>
+</main>
+<footer>由「课件智练」生成 · 单文件离线运行 · 答题记录仅保存在本机浏览器，可导出备份</footer>
+
+<script>
+var QUIZ = __QUIZ_DATA__;
+
+/* ================= 基础工具 ================= */
+var TYPE_NAME = { single: "单选", multiple: "多选", judge: "判断", short: "简答" };
+var EV_NAME = { "semantic-pass": "AI语义复核通过", "needs-review": "需人工复核", "unresolved": "验证未通过" };
+var LOC_NAME = { "located-exact": "已定位（精确）", "located-fuzzy": "已定位（近似）",
+                  "source-missing": "来源不存在", "segment-missing": "片段不存在", "quote-miss": "引用未定位",
+                  "no-quote": "缺引用文本", "no-evidence": "未核验", "source-failed": "来源解析失败" };
+var STORE_KEY = "cqb2:" + QUIZ.title + ":" + QUIZ.questions.length;
+
+var state = null;      // 持久化状态
+var session = null;    // 当前刷题会话 {mode, qids, idx, done}
+var view = "home";
+var storageOK = true;
+var storageWarned = false;
+
+function $(id) { return document.getElementById(id); }
+function el(tag, cls, text) {
+  var e = document.createElement(tag);
+  if (cls) e.className = cls;
+  if (text !== undefined) e.textContent = text;
+  return e;
+}
+function letter(i) { return "ABCDEFGH".charAt(i) || ("选项" + (i + 1)); }
+function qs() { return QUIZ.questions; }
+function qById(id) { for (var i = 0; i < QUIZ.questions.length; i++) { if (QUIZ.questions[i].id === id) return QUIZ.questions[i]; } return null; }
+function ts() { return new Date().toISOString(); }
+function fmtTime(iso) {
+  var d = new Date(iso);
+  function p(n) { return n < 10 ? "0" + n : "" + n; }
+  return d.getFullYear() + "-" + p(d.getMonth() + 1) + "-" + p(d.getDate()) + " " + p(d.getHours()) + ":" + p(d.getMinutes());
+}
+function pct(r, t) { return t ? Math.round(r / t * 100) : 0; }
+
+/* ================= 图片安全（白名单 + @key 共享表） ================= */
+function safeImgSrc(s) {
+  if (typeof s !== "string" || !s) return null;
+  if (/^data:image\/(png|jpe?g|gif|webp);base64,[A-Za-z0-9+/=]+$/.test(s)) return s;
+  if (/^[a-z][a-z0-9+.-]*:/i.test(s) || s.indexOf("//") === 0 || s.indexOf("\\") >= 0) return null;
+  if (s.indexOf("..") >= 0) return null;
+  if (/\.(png|jpe?g|gif|webp)$/i.test(s)) return s;
+  return null;
+}
+function resolveImgSrc(src) {
+  if (typeof src === "string" && src.charAt(0) === "@") {
+    var t = (QUIZ && QUIZ.images) ? QUIZ.images[src.slice(1)] : null;
+    return t ? safeImgSrc(t) : null;
+  }
+  return safeImgSrc(src);
+}
+function makeImg(src, cls) {
+  var s = resolveImgSrc(src);
+  if (!s) return null;
+  var im = document.createElement("img");
+  im.className = cls || "qimg";
+  im.alt = "题目配图";
+  im.src = s;
+  return im;
+}
+
+/* ================= 持久化（含失败提示与导出兜底） ================= */
+function newAttemptId() {
+  var d = new Date();
+  function p(n) { return n < 10 ? "0" + n : "" + n; }
+  return "att-" + d.getFullYear() + p(d.getMonth() + 1) + p(d.getDate()) +
+         "-" + p(d.getHours()) + p(d.getMinutes()) + p(d.getSeconds()) +
+         "-" + Math.random().toString(36).slice(2, 6);
+}
+function deepCopy(o) { return JSON.parse(JSON.stringify(o)); }
+function defaultState() {
+  return { v: 3, examPaper: null,
+           answers: {}, flags: {}, results: {}, shortSelf: {},
+           qHistory: {}, attempts: [] };
+}
+/* ---- v3 学习记录 Schema 校验与 v2 迁移（V2-05）：结构非法返回 null，绝不半写 ---- */
+function isPlainObj(v) { return v !== null && typeof v === "object" && !Array.isArray(v); }
+function validIdList(a) { return Array.isArray(a) && a.every(function (x) { return typeof x === "string"; }); }
+function validAnswers(o) {
+  return isPlainObj(o) && Object.keys(o).every(function (k) {
+    var v = o[k];
+    if (typeof v === "string") return true;
+    return Array.isArray(v) && v.every(function (x) { return typeof x === "number" && x >= 0 && x <= 7 && x % 1 === 0; });
+  });
+}
+function validFlags(o) { return isPlainObj(o) && Object.keys(o).every(function (k) { return typeof o[k] === "boolean"; }); }
+function validResults(o) { return isPlainObj(o) && Object.keys(o).every(function (k) { return typeof o[k] === "boolean"; }); }
+function validShortSelf(o) { return isPlainObj(o) && Object.keys(o).every(function (k) { return o[k] === "right" || o[k] === "wrong"; }); }
+function validQHistory(o) {
+  return isPlainObj(o) && Object.keys(o).every(function (k) {
+    return Array.isArray(o[k]) && o[k].every(function (e) {
+      return e && typeof e === "object" && typeof e.t === "string" &&
+             typeof e.ok === "boolean" && (typeof e.m === "string" || e.m === undefined);
+    });
+  });
+}
+function validAttempts(a) {
+  return Array.isArray(a) && a.every(function (e) {
+    return e && typeof e === "object" && typeof e.t === "string" &&
+      (e.mode === "practice" || e.mode === "exam" || e.mode === "redo") &&
+      typeof e.total === "number" && e.total >= 0 && e.total % 1 === 0 &&
+      typeof e.correct === "number" && e.correct >= 0 && e.correct % 1 === 0;
+  });
+}
+function validPaper(p) {
+  if (p === null) return true;
+  if (!isPlainObj(p)) return false;
+  if (typeof p.id !== "string" || !p.id) return false;
+  if (!validIdList(p.qids)) return false;
+  if (typeof p.started_at !== "string" && p.started_at !== null) return false;
+  if (typeof p.submitted !== "boolean") return false;
+  if (typeof p.submitted_at !== "string" && p.submitted_at !== null) return false;
+  if (!validAnswers(p.answers || {})) return false;
+  if (!validFlags(p.flags || {})) return false;
+  if (!validResults(p.results || {})) return false;
+  if (!validShortSelf(p.shortSelf || {})) return false;
+  return true;
+}
+function normalizeState(d, errRef) {
+  try {
+    if (!isPlainObj(d)) { if (errRef) errRef.msg = "根节点必须是对象"; return null; }
+    var out = null;
+    if (d.v === 3) {
+      if (!validPaper(d.examPaper === undefined ? null : d.examPaper)) {
+        if (errRef) errRef.msg = "examPaper 结构非法"; return null;
+      }
+      out = {
+        v: 3, examPaper: d.examPaper,
+        answers: d.answers, flags: d.flags, results: d.results,
+        shortSelf: d.shortSelf, qHistory: d.qHistory, attempts: d.attempts
+      };
+    } else if (d.v === 2) {
+      /* v2 → v3 迁移：qHistory/attempts 历史保留；已交卷的旧卷快照为已完成试卷 */
+      if (d.submitted) {
+        out = { v: 3,
+                examPaper: { id: "legacy-" + ts(), qids: [], started_at: null, submitted: true,
+                             submitted_at: null, idx: 0,
+                             answers: d.answers || {}, flags: d.flags || {},
+                             results: d.results || {}, shortSelf: d.shortSelf || {} },
+                answers: {}, flags: {}, results: {}, shortSelf: {},
+                qHistory: d.qHistory || {}, attempts: d.attempts || [] };
+      } else {
+        out = { v: 3, examPaper: null,
+                answers: d.answers || {}, flags: d.flags || {},
+                results: d.results || {}, shortSelf: d.shortSelf || {},
+                qHistory: d.qHistory || {}, attempts: d.attempts || [] };
+      }
+    } else {
+      if (errRef) errRef.msg = "仅支持 v2 / v3 学习记录（当前 v=" + JSON.stringify(d.v) + "）";
+      return null;
+    }
+    if (!validAnswers(out.answers) || !validFlags(out.flags) || !validResults(out.results) ||
+        !validShortSelf(out.shortSelf) || !validQHistory(out.qHistory) || !validAttempts(out.attempts)) {
+      if (errRef) errRef.msg = "作答/标记/历史字段结构非法";
+      return null;
+    }
+    /* 试卷题目与当前题库对齐：进行中试卷必须有有效题目集合，否则拒绝 */
+    if (out.examPaper && !out.examPaper.submitted) {
+      out.examPaper.qids = out.examPaper.qids.filter(function (id) { return !!qById(id); });
+      if (!out.examPaper.qids.length) {
+        if (errRef) errRef.msg = "进行中试卷的题目集合与当前题库不匹配";
+        return null;
+      }
+      out.examPaper.idx = Math.max(0, Math.min(out.examPaper.idx || 0, out.examPaper.qids.length - 1));
+    } else if (out.examPaper) {
+      out.examPaper.qids = (out.examPaper.qids || []).filter(function (id) { return !!qById(id); });
+    }
+    return out;
+  } catch (e) { if (errRef) errRef.msg = "解析学习记录失败"; return null; }
+}
+/* ---- 考试状态机（P0-4，修复 V2-04）：IDLE → IN_PROGRESS → SUBMITTED → REVIEW ---- */
+function examActive() {
+  return !!(session && session.mode === "exam" && state.examPaper &&
+            !state.examPaper.submitted && state.examPaper.id === session.paperId);
+}
+function examReviewed() {
+  return !!(session && session.mode === "exam" && state.examPaper && state.examPaper.submitted);
+}
+function examCtx() {
+  /* 成绩/解析视图的作答上下文：已交卷用试卷快照，新开考试不影响回看旧卷 */
+  return (state.examPaper && state.examPaper.submitted) ? state.examPaper : state;
+}
+function detectStorage() {
+  try {
+    var k = "__cqb2_probe__";
+    localStorage.setItem(k, "1");
+    localStorage.removeItem(k);
+    storageOK = true;
+  } catch (e) { storageOK = false; }
+}
+function save() {
+  if (!storageOK) { showStorageBanner(); return; }
+  try {
+    localStorage.setItem(STORE_KEY, JSON.stringify(state));
+  } catch (e) {
+    storageOK = false;
+    showStorageBanner();
+  }
+}
+function restore() {
+  try {
+    var raw = localStorage.getItem(STORE_KEY);
+    if (!raw) return;
+    var d = JSON.parse(raw);
+    var errRef = {};
+    var st = normalizeState(d, errRef);
+    state = st || defaultState();  /* 数据损坏/非法则视为无记录，不中断使用 */
+  } catch (e) { state = defaultState(); }
+}
+function showStorageBanner() {
+  if (storageWarned) return;
+  storageWarned = true;
+  var b = $("storage-banner");
+  b.hidden = false;
+  b.textContent = "";
+  b.appendChild(el("b", null, "⚠ 浏览器存储不可用："));
+  b.appendChild(document.createTextNode("本次答题进度无法自动保存，刷新后将丢失。请用「学习报告 → 导出学习记录」随时备份，之后可导入恢复。"));
+}
+function logAnswer(qid, ok, mode) {
+  if (!state.qHistory[qid]) state.qHistory[qid] = [];
+  state.qHistory[qid].push({ t: ts(), ok: !!ok, m: mode || "" });
+  if (state.qHistory[qid].length > 50) state.qHistory[qid] = state.qHistory[qid].slice(-50);
+}
+function logAttempt(mode, total, correct) {
+  state.attempts.push({ t: ts(), mode: mode, total: total, correct: correct });
+  if (state.attempts.length > 100) state.attempts = state.attempts.slice(-100);
+}
+
+/* ================= 判分 ================= */
+function objectiveOf(q) { return q.type !== "short"; }
+function isAnswered(q) {
+  var a = state.answers[q.id];
+  if (q.type === "short") return typeof a === "string" && a.trim().length > 0;
+  return Array.isArray(a) && a.length > 0;
+}
+function sameSet(a, b) {
+  if (!Array.isArray(a) || !Array.isArray(b) || a.length !== b.length) return false;
+  var x = a.slice().sort(), y = b.slice().sort();
+  for (var i = 0; i < x.length; i++) if (x[i] !== y[i]) return false;
+  return true;
+}
+function gradeObjective(q) {
+  return isAnswered(q) && sameSet(state.answers[q.id], q.answer);
+}
+function latestResult(qid) {
+  var h = state.qHistory[qid];
+  if (!h || !h.length) return null;
+  return h[h.length - 1];
+}
+function wrongSet() {
+  var set = {};
+  qs().forEach(function (q) {
+    var r = latestResult(q.id);
+    if (r && r.ok === false) set[q.id] = 1;
+  });
+  return set;
+}
+function answeredInSession() {
+  if (!session) return 0;
+  var n = 0;
+  session.qids.forEach(function (id) { if (isAnswered(qById(id))) n++; });
+  return n;
+}
+
+/* ================= 证据展示 ================= */
+function evidenceBadge(q) {
+  var est = q.evidence_status;
+  if (!est) return el("span", "badge ev-none", "未核验");
+  var cls = est === "semantic-pass" ? "ev-ok" : (est === "needs-review" ? "ev-warn" : "ev-bad");
+  return el("span", "badge " + cls, EV_NAME[est] || est);
+}
+function locateBadge(q) {
+  var ls = q.locate_status;
+  if (!ls) return null;
+  var good = ls === "located-exact" || ls === "located-fuzzy";
+  var cls = good ? "ev-ok" : (ls === "no-evidence" ? "ev-none" : "ev-bad");
+  return el("span", "badge " + cls, "来源" + (LOC_NAME[ls] || ls));
+}
+function buildEvidence(q) {
+  var box = document.createElement("details");
+  box.className = "evi";
+  var sum = el("summary", null, "📎 来源证据" + (q.segment_id ? "（" + q.segment_id + "）" : ""));
+  box.appendChild(sum);
+  var loc = q.locate_status ? locateBadge(q) : null;
+  if (loc) box.appendChild(loc);
+  box.appendChild(document.createTextNode(" "));
+  box.appendChild(evidenceBadge(q));
+  if (q.source_quote) {
+    var qu = el("div", "quote");
+    qu.appendChild(el("b", null, "材料原文："));
+    qu.appendChild(document.createTextNode(q.source_quote));
+    box.appendChild(qu);
+  }
+  var shownRef = q.canonical_ref || q.source_ref;  /* v2.2 反伪造：展示以材料真实定位为准 */
+  if (shownRef) {
+    var sr = el("div", "muted", "出处：" + shownRef + (q.segment_id ? "（" + q.segment_id + "）" : ""));
+    if (q.canonical_ref && q.source_ref && q.source_ref !== q.canonical_ref) {
+      sr.appendChild(el("div", "muted", "（题目原注：" + q.source_ref + "，已按材料真实定位校正展示）"));
+    }
+    if (q.ref_conflict) {
+      sr.appendChild(el("div", "badge ev-bad", "⚠ 出处矛盾：" + q.ref_conflict));
+    }
+    box.appendChild(sr);
+  }
+  if (q.verification_notes) {
+    var vn = el("div", "muted", "复核备注：" + q.verification_notes);
+    box.appendChild(vn);
+  }
+  if (!q.source_quote && !q.source_ref && !q.evidence_status) {
+    box.appendChild(el("div", "muted", "本题未携带证据链字段（旧格式题库），无法溯源核验。"));
+  }
+  return box;
+}
+
+/* ================= 视图路由 ================= */
+function goHome() {
+  session = null;
+  view = "home";
+  render();
+  window.scrollTo(0, 0);
+}
+function crumbText() {
+  if (view === "quiz") return "课件智练 › " + (session ? sessionTitle() : "刷题");
+  if (view === "results") return "课件智练 › 成绩与解析";
+  if (view === "wrong") return "课件智练 › 错题中心";
+  if (view === "report") return "课件智练 › 学习报告";
+  return "课件智练";
+}
+function sessionTitle() {
+  if (!session) return "";
+  if (session.mode === "exam") return "考试模式";
+  if (session.mode === "redo") return "错题复练";
+  return "复习模式";
+}
+
+/* ================= 首页 ================= */
+function topicName(q) {
+  if (q.topic) return q.topic;
+  if (q.topic_id && QUIZ.topics) {
+    for (var i = 0; i < QUIZ.topics.length; i++) {
+      if (QUIZ.topics[i].id === q.topic_id) return QUIZ.topics[i].name;
+    }
+  }
+  return "未分类";
+}
+function allTopics() {
+  var seen = [], names = {};
+  qs().forEach(function (q) {
+    var n = topicName(q);
+    if (!names[n]) { names[n] = 0; seen.push(n); }
+    names[n]++;
+  });
+  return { list: seen, counts: names };
+}
+function renderHome() {
+  var box = $("view");
+  box.textContent = "";
+  $("toolbar").hidden = true;
+
+  var hero = el("div", "card");
+  var h2 = el("h2", null, "开始复习");
+  h2.style.margin = "0 0 6px";
+  h2.style.fontSize = "18px";
+  hero.appendChild(h2);
+  hero.appendChild(el("div", "muted", "复习模式：逐题即时反馈，答错当场看解析；考试模式：整卷作答后统一判分。"));
+
+  var cta = el("div", "hero-cta");
+  var inExam = !!(state.examPaper && !state.examPaper.submitted && state.examPaper.qids.length);
+  if (inExam) {
+    var ansN = 0;
+    state.examPaper.qids.forEach(function (id) { if (isAnswered(qById(id))) ansN++; });
+    var cont = el("button", "btn primary", "继续考试（已答 " + ansN + "/" + state.examPaper.qids.length + "）");
+    cont.addEventListener("click", resumeExam);
+    cta.appendChild(cont);
+    var drop = el("button", "btn", "放弃本次考试");
+    drop.addEventListener("click", function () {
+      if (!confirm("放弃将作废本次未交卷的作答（答题历史保留）。确定吗？")) return;
+      state.examPaper = null;
+      state.answers = {}; state.results = {}; state.shortSelf = {};
+      save(); render();
+    });
+    cta.appendChild(drop);
+  } else if (Object.keys(state.answers).length > 0) {
+    var cont2 = el("button", "btn primary", "继续上次练习");
+    cont2.addEventListener("click", function () { startSession("practice"); });
+    cta.appendChild(cont2);
+  }
+  var hasAnything = inExam || Object.keys(state.answers).length > 0;
+  var bp = el("button", "btn " + (hasAnything ? "" : "primary"), "复习模式（即时反馈）");
+  bp.addEventListener("click", function () { startSession("practice"); });
+  var be = el("button", "btn ghost-teal", "考试模式（整卷判分）");
+  be.addEventListener("click", function () { startSession("exam"); });
+  cta.appendChild(bp); cta.appendChild(be);
+  hero.appendChild(cta);
+
+  if (state.examPaper && state.examPaper.submitted) {
+    var lastr = el("div", "row");
+    lastr.style.marginTop = "10px";
+    var bv = el("button", "btn sm", "查看上次考试成绩");
+    bv.addEventListener("click", function () { view = "results"; render(); window.scrollTo(0, 0); });
+    lastr.appendChild(bv);
+    hero.appendChild(lastr);
+  }
+
+  var wrongs = wrongSet();
+  var alt = el("div", "row");
+  alt.style.marginTop = "10px";
+  var bw = el("button", "btn sm danger", "错题中心" + (Object.keys(wrongs).length ? "（" + Object.keys(wrongs).length + "）" : ""));
+  bw.addEventListener("click", function () { view = "wrong"; render(); });
+  var br = el("button", "btn sm", "学习报告");
+  br.addEventListener("click", function () { view = "report"; render(); });
+  alt.appendChild(bw); alt.appendChild(br);
+  hero.appendChild(alt);
+
+  if (state.attempts.length) {
+    var last = state.attempts[state.attempts.length - 1];
+    hero.appendChild(el("div", "muted", "上次：" + fmtTime(last.t) + " · " +
+      (last.mode === "redo" ? "错题复练" : (last.mode === "exam" ? "考试" : "练习")) +
+      " · 答对 " + last.correct + "/" + last.total));
+  }
+  box.appendChild(hero);
+
+  var stat = el("div", "card");
+  stat.appendChild(el("h2", null, "题库概览")).style.cssText = "margin:0 0 4px;font-size:16px";
+  var grid = el("div", "stat-grid");
+  var c = { single: 0, multiple: 0, judge: 0, short: 0 }, d = { 易: 0, 中: 0, 难: 0 };
+  qs().forEach(function (q) { c[q.type]++; d[q.difficulty]++; });
+  function statItem(b, s) { var e = el("div", "stat"); e.appendChild(el("b", null, b)); e.appendChild(el("span", null, s)); return e; }
+  grid.appendChild(statItem(qs().length, "总题数"));
+  grid.appendChild(statItem((c.single + c.multiple) + " / " + (c.judge + c.short), "客观 / 主观"));
+  grid.appendChild(statItem(d.易 + "·" + d.中 + "·" + d.难, "易·中·难"));
+  var tp = allTopics();
+  grid.appendChild(statItem(tp.list.length, "考点"));
+  stat.appendChild(grid);
+
+  var tlabel = el("div", null, "按考点练习（点击考点进入针对性复习）：");
+  tlabel.style.margin = "14px 0 0";
+  tlabel.style.fontSize = "13.5px";
+  stat.appendChild(tlabel);
+  var tl = el("div", "topic-list");
+  tp.list.forEach(function (name) {
+    var pill = el("button", "topic-pill", name + "（" + tp.counts[name] + "题）");
+    pill.addEventListener("click", function () {
+      var ids = qs().filter(function (q) { return topicName(q) === name; }).map(function (q) { return q.id; });
+      startSession("practice", ids);
+    });
+    tl.appendChild(pill);
+  });
+  stat.appendChild(tl);
+  box.appendChild(stat);
+
+  var ev = el("div", "card");
+  ev.appendChild(el("h2", null, "证据链说明")).style.cssText = "margin:0 0 6px;font-size:16px";
+  var withEv = qs().filter(function (q) { return q.segment_id; }).length;
+  var okc = qs().filter(function (q) { return q.locate_status === "located-exact" || q.locate_status === "located-fuzzy"; }).length;
+  var need = qs().filter(function (q) { return q.evidence_status === "needs-review" || q.evidence_status === "unresolved"; }).length;
+  ev.appendChild(el("div", "muted",
+    withEv + "/" + qs().length + " 题携带来源证据；" + okc + " 题通过脚本定位核验" +
+    (need ? "；" + need + " 题标注需人工复核（作答后会醒目提示）" : "") + "。"));
+  ev.appendChild(el("div", "muted", "题目与解析由 AI 基于课件生成，来源引用可溯源；规则核验不等于语义绝对正确，重要考点请以教材为准。"));
+  box.appendChild(ev);
+}
+
+/* ================= 刷题会话 ================= */
+function startSession(mode, subsetIds) {
+  var ids = subsetIds || qs().map(function (q) { return q.id; });
+  if (!ids.length) { alert("该筛选条件下没有题目。"); return; }
+  if (mode === "exam") {
+    /* P0-4：每次开考 = 新 attempt_id，清空当前卷作答；qHistory/attempts 历史保留 */
+    if (state.examPaper && !state.examPaper.submitted) {
+      if (!confirm("当前有未交卷的考试，重新开考将作废该卷作答（答题历史保留）。确定重新开考吗？")) return;
+    }
+    state.answers = {}; state.results = {}; state.shortSelf = {};
+    state.examPaper = { id: newAttemptId(), qids: ids.slice(), idx: 0,
+                        started_at: ts(), submitted: false, submitted_at: null,
+                        answers: {}, flags: {}, results: {}, shortSelf: {} };
+    session = { mode: mode, qids: ids, idx: 0, graded: {}, paperId: state.examPaper.id };
+    save();
+  } else {
+    /* 复习/复练开新会话：重置会话内判分（历史记录 qHistory 保留，供报告与前后对比） */
+    state.results = {};
+    session = { mode: mode, qids: ids, idx: 0, graded: {}, paperId: null };
+    save();
+  }
+  view = "quiz";
+  render();
+  window.scrollTo(0, 0);
+}
+function resumeExam() {
+  /* 恢复进行中的考试（刷新后/首页继续） */
+  var p = state.examPaper;
+  if (!p || p.submitted || !p.qids.length) { goHome(); return; }
+  session = { mode: "exam", qids: p.qids.slice(),
+              idx: Math.max(0, Math.min(p.idx || 0, p.qids.length - 1)),
+              graded: {}, paperId: p.id };
+  view = "quiz";
+  render();
+  window.scrollTo(0, 0);
+}
+function sessionQ(i) { return qById(session.qids[i]); }
+
+function renderQuiz() {
+  $("toolbar").hidden = false;
+  var tb = $("toolbar-inner");
+  tb.textContent = "";
+  var info = el("span", "progress",
+    sessionTitle() + " · 已答 " + answeredInSession() + "/" + session.qids.length +
+    " · 未答 " + (session.qids.length - answeredInSession()));
+  tb.appendChild(info);
+  if (examActive()) {
+    var sub = el("button", "btn primary sm", "交卷");
+    sub.addEventListener("click", submitExam);
+    tb.appendChild(sub);
+  }
+  if (session.mode !== "exam" || examReviewed()) {
+    var home = el("button", "btn sm", "返回首页");
+    home.addEventListener("click", goHome);
+    tb.appendChild(home);
+  }
+  /* 进行中考试：持久化当前位置，刷新后可恢复到同一题 */
+  if (examActive() && state.examPaper.idx !== session.idx) {
+    state.examPaper.idx = session.idx;
+    save();
+  }
+
+  var box = $("view");
+  box.textContent = "";
+  var q = sessionQ(session.idx);
+
+  if (session.mode === "exam" && examReviewed()) {
+    box.appendChild(renderResultCard(q));
+    appendNav(box, q);
+    return;
+  }
+  if (session.mode === "exam") {
+    box.appendChild(renderExamCard(q));
+    appendNav(box, q);
+    return;
+  }
+  // practice / redo：即时反馈
+  box.appendChild(renderPracticeCard(q));
+  appendNav(box, q);
+}
+
+function qHeadBadges(q) {
+  var head = el("div", "qhead");
+  head.appendChild(el("span", "badge qid", q.id));
+  head.appendChild(el("span", "badge t-" + q.type, TYPE_NAME[q.type]));
+  head.appendChild(el("span", "badge d-" + q.difficulty, q.difficulty));
+  head.appendChild(el("span", "badge topic", topicName(q)));
+  var loc = locateBadge(q);
+  if (loc) head.appendChild(loc);
+  var est = q.evidence_status;
+  if (est === "needs-review" || est === "unresolved") head.appendChild(evidenceBadge(q));
+  return head;
+}
+
+function buildOption(q, idx, locked, showResult, answersSrc) {
+  var b = el("button", "opt");
+  var label = (q.type === "judge") ? q.options[idx] : letter(idx) + ". " + q.options[idx];
+  b.appendChild(document.createTextNode(label));
+  if (Array.isArray(q.option_images) && q.option_images[idx]) {
+    var oi = makeImg(q.option_images[idx], null);
+    if (oi) b.appendChild(oi);
+  }
+  var ansSrc = answersSrc || state.answers;
+  var chosen = Array.isArray(ansSrc[q.id]) && ansSrc[q.id].indexOf(idx) >= 0;
+  if (showResult) {
+    b.disabled = true;
+    var isCorrect = q.answer.indexOf(idx) >= 0;
+    if (isCorrect) { b.classList.add("ok"); b.appendChild(el("span", "tag okc", "✓ 正确答案")); }
+    else if (chosen) { b.classList.add("no"); b.appendChild(el("span", "tag noc", "✗ 你的选择")); }
+  } else if (chosen) {
+    b.classList.add("sel");
+  }
+  if (!locked && !showResult) {
+    b.addEventListener("click", function () {
+      var cur = state.answers[q.id] || [];
+      if (q.type === "multiple") {
+        var p = cur.indexOf(idx);
+        if (p >= 0) cur.splice(p, 1); else cur.push(idx);
+        state.answers[q.id] = cur;
+      } else {
+        state.answers[q.id] = [idx];
+      }
+      // 复习/复练模式：单选与判断点击后即时判分并记录（多选由「确认答案」按钮判分）
+      if (session && session.mode !== "exam" && q.type !== "multiple") {
+        var ok = sameSet(state.answers[q.id], q.answer);
+        state.results[q.id] = ok;
+        if (session.graded) session.graded[q.id] = ok;
+        logAnswer(q.id, ok, session.mode);
+      }
+      save(); render();
+    });
+  }
+  return b;
+}
+
+function renderExamCard(q) {
+  var card = el("div", "qcard");
+  var head = qHeadBadges(q);
+  var flag = el("button", "btn sm flagbtn", state.flags[q.id] ? "★ 已标记" : "☆ 标记本题");
+  flag.addEventListener("click", function () {
+    state.flags[q.id] = !state.flags[q.id];
+    save(); render();
+  });
+  head.appendChild(flag);
+  card.appendChild(head);
+  card.appendChild(el("p", "stem", q.stem));
+  if (q.image) { var im = makeImg(q.image, "qimg"); if (im) card.appendChild(im); }
+  if (q.type === "short") {
+    card.appendChild(buildShortArea(q, false));
+  } else {
+    for (var i = 0; i < q.options.length; i++) card.appendChild(buildOption(q, i, false, false));
+    if (q.type === "multiple") card.appendChild(el("div", "muted", "多选题：点击选择所有你认为正确的选项"));
+  }
+  return card;
+}
+
+function buildShortArea(q, locked, answersSrc) {
+  var ta = document.createElement("textarea");
+  ta.className = "answer";
+  ta.placeholder = "在此输入你的作答";
+  var ansSrc = answersSrc || state.answers;
+  ta.value = typeof ansSrc[q.id] === "string" ? ansSrc[q.id] : "";
+  ta.disabled = locked;
+  ta.addEventListener("input", function () {
+    state.answers[q.id] = ta.value;
+    save();
+    if (session && $("toolbar") && !$("toolbar").hidden) {
+      var info = document.querySelector(".progress");
+      if (info && session.mode === "exam") {
+        info.textContent = sessionTitle() + " · 已答 " + answeredInSession() + "/" + session.qids.length +
+          " · 未答 " + (session.qids.length - answeredInSession());
+      }
+    }
+  });
+  return ta;
+}
+
+function isGradedInSession(q) {
+  if (!session || session.mode === "exam") return false;
+  return session.graded && session.graded[q.id] !== undefined;
+}
+
+function renderPracticeCard(q) {
+  var card = el("div", "qcard");
+  var latest = latestResult(q.id);
+  var graded = isGradedInSession(q);
+  var show = graded || (!objectiveOf(q) && isAnswered(q));  // 简答：作答后即展示参考答案与自评
+
+  var okInSession = graded ? session.graded[q.id] : (latest ? latest.ok : undefined);
+  if (okInSession === false) card.classList.add("wrong");
+  else if (okInSession === true) card.classList.add("right");
+
+  var head = qHeadBadges(q);
+  var flag = el("button", "btn sm flagbtn", state.flags[q.id] ? "★ 已标记" : "☆ 标记本题");
+  flag.addEventListener("click", function () {
+    state.flags[q.id] = !state.flags[q.id];
+    save(); render();
+  });
+  head.appendChild(flag);
+  card.appendChild(head);
+  card.appendChild(el("p", "stem", q.stem));
+  if (q.image) { var im = makeImg(q.image, "qimg"); if (im) card.appendChild(im); }
+
+  if (q.type === "short") {
+    card.appendChild(buildShortArea(q, show));
+    if (show) {
+      card.appendChild(buildShortFeedback(q, function () { render(); }));
+    } else {
+      var self = el("button", "btn primary", "作答完成，对照参考答案自评");
+      self.addEventListener("click", function () {
+        if (!isAnswered(q)) { alert("请先输入作答内容。"); return; }
+        render();  // 进入自评分支
+      });
+      card.appendChild(self);
+    }
+  } else {
+    for (var i = 0; i < q.options.length; i++) card.appendChild(buildOption(q, i, graded, graded));
+    if (!graded && q.type === "multiple") {
+      card.appendChild(el("div", "muted", "多选题：选择所有你认为正确的选项，然后点击确认"));
+      var confirmBtn = el("button", "btn primary", "确认答案");
+      confirmBtn.addEventListener("click", function () {
+        if (!isAnswered(q)) { alert("请先选择选项。"); return; }
+        var ok = gradeObjective(q);
+        state.results[q.id] = ok;
+        if (session && session.graded) session.graded[q.id] = ok;
+        logAnswer(q.id, ok, session ? session.mode : "practice");
+        save(); render();
+      });
+      card.appendChild(confirmBtn);
+    }
+    if (graded) {
+      card.appendChild(buildExplain(q));
+      card.appendChild(buildEvidence(q));
+      var redo1 = el("button", "btn sm", "重做本题");
+      redo1.addEventListener("click", function () { redoQuestion(q.id); });
+      var rb = el("div", "qnav");
+      rb.appendChild(redo1);
+      card.appendChild(rb);
+    }
+  }
+  return card;
+}
+
+function buildShortFeedback(q, onChange) {
+  var ref = el("div", "refbox");
+  ref.appendChild(el("b", null, "参考答案："));
+  ref.appendChild(document.createTextNode(q.answer));
+  ref.appendChild(el("div", null, ""));
+  var sb = el("div", "selfbtns");
+  function mk(label, val) {
+    var b = el("button", "btn sm" + (state.shortSelf[q.id] === val ? " on" : ""), label);
+    b.addEventListener("click", function () {
+      state.shortSelf[q.id] = val;
+      if (session && session.graded) session.graded[q.id] = (val === "right");
+      logAnswer(q.id, val === "right", session ? session.mode : "practice");
+      save(); onChange();
+    });
+    return b;
+  }
+  sb.appendChild(mk("自评：我答对了", "right"));
+  sb.appendChild(mk("自评：我答错了", "wrong"));
+  var box = el("div");
+  box.appendChild(ref);
+  box.appendChild(sb);
+  var ex = buildExplain(q);
+  ex.appendChild(buildEvidence(q));
+  box.appendChild(ex);
+  return box;
+}
+
+function buildExplain(q) {
+  var ex = el("div", "explain");
+  ex.appendChild(el("b", null, "解析："));
+  ex.appendChild(document.createTextNode(q.explanation));
+  if (q.source_ref) {
+    var refTxt = q.canonical_ref || q.source_ref;
+    var r = el("div", "ref", "出处：" + refTxt + (q.segment_id ? "（" + q.segment_id + "）" : ""));
+    ex.appendChild(r);
+  }
+  return ex;
+}
+
+function appendNav(box, q) {
+  var nav = el("div", "qnav");
+  var prev = el("button", "btn", "← 上一题");
+  prev.disabled = session.idx === 0;
+  prev.addEventListener("click", function () { if (session.idx > 0) { session.idx--; render(); } });
+  var next = el("button", "btn primary", session.idx === session.qids.length - 1 ? "最后一题" : "下一题 →");
+  next.disabled = session.idx === session.qids.length - 1;
+  next.addEventListener("click", function () {
+    if (session.idx < session.qids.length - 1) { session.idx++; render(); }
+  });
+  nav.appendChild(prev); nav.appendChild(next);
+  if (session.mode === "redo" && session.idx === session.qids.length - 1) {
+    var fin = el("button", "btn ghost-teal", "完成复练");
+    fin.addEventListener("click", finishRedo);
+    nav.appendChild(fin);
+  }
+  box.appendChild(nav);
+
+  var pal = el("div", "palette");
+  session.qids.forEach(function (id, i) {
+    var b = el("button", "pal");
+    b.textContent = (i + 1);
+    if (i === session.idx) b.classList.add("cur");
+    var qq = qById(id);
+    if (isAnswered(qq)) {
+      if (session.mode !== "exam" && session.graded && session.graded[id] !== undefined) {
+        b.classList.add(session.graded[id] ? "right" : "wrong");
+      } else if (session.mode !== "exam") {
+        b.classList.add("answered");
+      } else {
+        b.classList.add("answered");
+      }
+    }
+    if (state.flags[id]) b.appendChild(el("span", "star", "★"));
+    b.addEventListener("click", function () { session.idx = i; render(); });
+    pal.appendChild(b);
+  });
+  box.appendChild(pal);
+  var hint = el("div", "muted", "键盘：←/→ 切换题目，数字键 1-8 选择选项，F 标记本题");
+  hint.style.marginTop = "8px";
+  box.appendChild(hint);
+}
+
+/* 考试交卷（P0-4：状态守卫 + 深拷贝快照，防重复交卷与旧卷覆盖） */
+function submitExam() {
+  if (!session || session.mode !== "exam") return;
+  var p = state.examPaper;
+  if (!p || p.submitted || p.id !== session.paperId || session.submitting) return;
+  var unanswered = session.qids.length - answeredInSession();
+  var msg = unanswered > 0
+    ? "还有 " + unanswered + " 题未作答，未答题按错误计。确定交卷吗？"
+    : "确定交卷并查看成绩吗？";
+  if (!confirm(msg)) return;
+  session.submitting = true;
+  var correct = 0, total = 0;
+  session.qids.forEach(function (id) {
+    var q = qById(id);
+    if (objectiveOf(q)) {
+      total++;
+      var ok = gradeObjective(q);
+      state.results[q.id] = ok;
+      if (ok) correct++;
+      logAnswer(q.id, ok, "exam");
+    } else {
+      total++;
+      logAnswer(q.id, state.shortSelf[q.id] === "right", "exam");
+      if (state.shortSelf[q.id] === "right") correct++;
+    }
+  });
+  p.submitted = true;
+  p.submitted_at = ts();
+  p.idx = session.idx;
+  p.total = total;
+  p.correct = correct;
+  /* 深拷贝快照：之后新开考试/练习修改当前作答，不影响本卷成绩回看 */
+  p.answers = deepCopy(state.answers);
+  p.results = deepCopy(state.results);
+  p.shortSelf = deepCopy(state.shortSelf);
+  p.flags = deepCopy(state.flags);
+  logAttempt("exam", total, correct);
+  session.submitting = false;
+  save();
+  view = "results";
+  render();
+  window.scrollTo(0, 0);
+}
+
+/* 复练完成 */
+function finishRedo() {
+  var total = session.qids.length, correct = 0;
+  session.qids.forEach(function (id) {
+    if (session.graded && session.graded[id] !== undefined) {
+      if (session.graded[id]) correct++;
+    } else {
+      var q = qById(id);
+      var ok = objectiveOf(q) ? gradeObjective(q) : (state.shortSelf[q.id] === "right");
+      if (ok) correct++;
+    }
+  });
+  logAttempt("redo", total, correct);
+  save();
+  view = "wrong";
+  render();
+  alert("复练完成：" + correct + "/" + total + " 题已纠正。错题中心已更新前后对比。");
+  window.scrollTo(0, 0);
+}
+
+/* 单题重做（清除当前作答，保留历史记录） */
+function redoQuestion(qid) {
+  delete state.results[qid];
+  if (state.answers[qid] !== undefined) { state.answers[qid] = objectiveOf(qById(qid)) ? [] : ""; }
+  save();
+  startSession("redo", [qid]);
+}
+
+/* ================= 成绩与解析 ================= */
+function renderResultCard(q) {
+  var ctx = examCtx();  /* 已交卷用试卷快照：新开考试/练习不影响回看 */
+  var card = el("div", "qcard");
+  var ok = objectiveOf(q) ? ctx.results[q.id] : (ctx.shortSelf[q.id] === "right");
+  card.classList.add(ok ? "right" : "wrong");
+  card.appendChild(qHeadBadges(q));
+  card.appendChild(el("p", "stem", q.stem));
+  if (q.image) { var im = makeImg(q.image, "qimg"); if (im) card.appendChild(im); }
+  if (q.type === "short") {
+    card.appendChild(buildShortArea(q, true, ctx.answers));
+    var ref = el("div", "refbox");
+    ref.appendChild(el("b", null, "参考答案："));
+    ref.appendChild(document.createTextNode(q.answer));
+    card.appendChild(ref);
+    var sb = el("div", "selfbtns");
+    function mk(label, val) {
+      var b = el("button", "btn sm" + (ctx.shortSelf[q.id] === val ? " on" : ""), label);
+      b.addEventListener("click", function () {
+        ctx.shortSelf[q.id] = val;
+        logAnswer(q.id, val === "right", "exam");
+        save(); render();
+      });
+      return b;
+    }
+    sb.appendChild(mk("自评：我答对了", "right"));
+    sb.appendChild(mk("自评：我答错了", "wrong"));
+    card.appendChild(sb);
+  } else {
+    for (var i = 0; i < q.options.length; i++) card.appendChild(buildOption(q, i, true, true, ctx.answers));
+  }
+  card.appendChild(buildExplain(q));
+  card.appendChild(buildEvidence(q));
+  return card;
+}
+
+function renderResults() {
+  $("toolbar").hidden = false;
+  var tb = $("toolbar-inner");
+  tb.textContent = "";
+  tb.appendChild(el("span", "progress", "成绩与解析"));
+  var back = el("button", "btn sm", "返回首页");
+  back.addEventListener("click", goHome);
+  tb.appendChild(back);
+
+  var ctx = examCtx();
+  var box = $("view");
+  box.textContent = "";
+
+  var card = el("div", "card");
+  var h2 = card.appendChild(el("h2", null, "成绩单"));
+  h2.style.cssText = "margin:0 0 8px;font-size:17px";
+  if (state.examPaper && state.examPaper.submitted) {
+    card.appendChild(el("div", "muted",
+      "本次试卷 " + state.examPaper.id + " · 交卷时间 " +
+      (state.examPaper.submitted_at ? fmtTime(state.examPaper.submitted_at) : "—") +
+      " · 共 " + (state.examPaper.total || "—") + " 题（含简答自评）"));
+  }
+  var objT = 0, objR = 0, shT = 0, shR = 0;
+  var byDiff = {}, byTopic = {};
+  qs().forEach(function (q) {
+    var tname = topicName(q);
+    byTopic[tname] = byTopic[tname] || { t: 0, r: 0 };
+    byTopic[tname].t++;
+    byDiff[q.difficulty] = byDiff[q.difficulty] || { t: 0, r: 0 };
+    byDiff[q.difficulty].t++;
+    if (objectiveOf(q)) {
+      objT++;
+      var ok = ctx.results[q.id];
+      if (ok) { objR++; byDiff[q.difficulty].r++; byTopic[tname].r++; }
+    } else {
+      shT++;
+      if (ctx.shortSelf[q.id] === "right") { shR++; byDiff[q.difficulty].r++; byTopic[tname].r++; }
+    }
+  });
+  var sc = el("div", "score", objR + " / " + objT);
+  sc.appendChild(el("small", null, "　客观题系统判分 · 正确率 " + pct(objR, objT) + "%"));
+  card.appendChild(sc);
+  if (shT > 0) {
+    card.appendChild(el("div", null, "简答题自评（用户自评，非系统判分）：已评 " +
+      (function () { var n = 0; for (var k in ctx.shortSelf) n++; return n; })() + " / " + shT +
+      " · 自评答对 " + shR));
+  }
+  var grid = el("div", "sum-grid");
+  ["易", "中", "难"].forEach(function (d) {
+    if (!byDiff[d]) return;
+    var item = el("span", "sum-item");
+    item.appendChild(el("b", null, d + "：" + byDiff[d].r + "/" + byDiff[d].t));
+    grid.appendChild(item);
+  });
+  card.appendChild(grid);
+
+  var topicHead = el("div");
+  topicHead.style.margin = "12px 0 2px";
+  topicHead.appendChild(el("b", null, "各考点正确率"));
+  card.appendChild(topicHead);
+  var names = Object.keys(byTopic);
+  names.forEach(function (n) {
+    var row = el("div", "mrow");
+    row.appendChild(el("span", "name", n));
+    var bar = el("div", "bar");
+    var fill = el("i", byTopic[n].r / byTopic[n].t < 0.5 ? "low" : "");
+    fill.style.width = pct(byTopic[n].r, byTopic[n].t) + "%";
+    bar.appendChild(fill);
+    row.appendChild(bar);
+    row.appendChild(el("span", "pct", byTopic[n].r + "/" + byTopic[n].t + "（" + pct(byTopic[n].r, byTopic[n].t) + "%）"));
+    card.appendChild(row);
+  });
+
+  var wrongs = wrongSet();
+  var verdictRow = el("div", "verdict");
+  verdictRow.appendChild(el("span", null, wrongs && Object.keys(wrongs).length
+    ? "错题 " + Object.keys(wrongs).length + " 道。" : "暂无错题，继续保持！"));
+  if (wrongs && Object.keys(wrongs).length) {
+    var goWrong = el("button", "btn primary sm", "去错题中心复练");
+    goWrong.style.marginLeft = "10px";
+    goWrong.addEventListener("click", function () { view = "wrong"; render(); window.scrollTo(0, 0); });
+    verdictRow.appendChild(goWrong);
+  }
+  card.appendChild(verdictRow);
+
+  /* P0-4：REVIEW 出口 —— 逐题回看本卷 / 再考一次（新 attempt） */
+  if (state.examPaper && state.examPaper.submitted) {
+    var act = el("div", "hero-cta");
+    var rv = el("button", "btn", "逐题回看本次作答");
+    rv.addEventListener("click", function () {
+      var p = state.examPaper;
+      if (!p || !p.submitted || !p.qids.length) { alert("没有可回看的试卷。"); return; }
+      session = { mode: "exam", qids: p.qids.slice(), idx: 0, graded: {}, paperId: p.id };
+      view = "quiz";
+      render();
+      window.scrollTo(0, 0);
+    });
+    var re = el("button", "btn primary", "再考一次（新试卷）");
+    re.addEventListener("click", function () { startSession("exam"); });
+    act.appendChild(rv);
+    act.appendChild(re);
+    card.appendChild(act);
+  }
+  box.appendChild(card);
+
+  qs().forEach(function (q) {
+    var ok = objectiveOf(q) ? ctx.results[q.id] : (ctx.shortSelf[q.id] === "right");
+    if (ok) return;  // 只展开错题；对题折叠为一行
+    box.appendChild(renderResultCard(q));
+  });
+  var rightCount = qs().length - Object.keys(wrongs).length;
+  if (rightCount > 0) {
+    var rc = el("div", "card");
+    rc.appendChild(el("div", "muted", "另有 " + rightCount + " 题已答对（已折叠），可回首页用复习模式回顾。"));
+    box.appendChild(rc);
+  }
+}
+
+/* ================= 错题中心 ================= */
+function renderWrong() {
+  $("toolbar").hidden = false;
+  var tb = $("toolbar-inner");
+  tb.textContent = "";
+  tb.appendChild(el("span", "progress", "错题中心"));
+  var back = el("button", "btn sm", "返回首页");
+  back.addEventListener("click", goHome);
+  tb.appendChild(back);
+
+  var box = $("view");
+  box.textContent = "";
+  var wrongs = wrongSet();
+
+  var head = el("div", "card");
+  head.appendChild(el("h2", null, "错题中心")).style.cssText = "margin:0 0 8px;font-size:17px";
+  if (!Object.keys(wrongs).length) {
+    head.appendChild(el("div", null, "当前没有错题。作答（练习/考试/复练）后，最近一次答错的题会集中在这里。"));
+    box.appendChild(head);
+    return;
+  }
+  var ids = Object.keys(wrongs);
+  head.appendChild(el("div", "muted", "共 " + ids.length + " 道错题（按最近一次作答结果判定）。复练后答对会自动移出，并保留前后对比。"));
+  var actions = el("div", "row");
+  actions.style.marginTop = "10px";
+  var redoAll = el("button", "btn primary", "重做全部错题");
+  redoAll.addEventListener("click", function () { startSession("redo", ids); });
+  actions.appendChild(redoAll);
+  head.appendChild(actions);
+  box.appendChild(head);
+
+  var byTopic = {};
+  ids.forEach(function (id) {
+    var q = qById(id);
+    var n = topicName(q);
+    (byTopic[n] = byTopic[n] || []).push(id);
+  });
+  Object.keys(byTopic).forEach(function (n) {
+    var g = el("div", "wgroup");
+    g.appendChild(el("h3", null, "▸ " + n + "（" + byTopic[n].length + " 题）"));
+    byTopic[n].forEach(function (id) {
+      g.appendChild(wrongItem(qById(id)));
+    });
+    box.appendChild(g);
+  });
+}
+
+function wrongItem(q) {
+  var item = el("div", "witem");
+  var head = el("div", "whead");
+  head.appendChild(el("span", "badge qid", q.id));
+  head.appendChild(el("span", "badge t-" + q.type, TYPE_NAME[q.type]));
+  head.appendChild(el("span", "badge topic", topicName(q)));
+  var est = q.evidence_status;
+  if (est === "needs-review" || est === "unresolved") head.appendChild(evidenceBadge(q));
+  item.appendChild(head);
+
+  item.appendChild(el("p", "stem", q.stem));
+
+  // 错误原因
+  var why = el("div", "why");
+  if (objectiveOf(q)) {
+    var mine = state.answers[q.id];
+    var mineTxt = (Array.isArray(mine) && mine.length)
+      ? mine.map(function (i) { return letter(i); }).join("、")
+      : "未作答";
+    var corrTxt = q.answer.map(function (i) { return letter(i); }).join("、");
+    why.appendChild(el("b", null, "错误原因："));
+    why.appendChild(document.createTextNode("你选了 " + mineTxt + "，正确答案是 " + corrTxt + "。"));
+  } else {
+    why.appendChild(el("b", null, "简答题："));
+    why.appendChild(document.createTextNode("参考答案与你作答的对照见解析；请自评后复练。"));
+  }
+  item.appendChild(why);
+
+  item.appendChild(buildExplain(q));
+  item.appendChild(buildEvidence(q));
+
+  // 前后对比（历史链）
+  var h = state.qHistory[q.id] || [];
+  if (h.length > 1) {
+    var chain = el("div", "chain", "作答历史：" + h.map(function (r) {
+      return fmtTime(r.t).slice(5, 16) + (r.ok ? " ✓" : " ✗");
+    }).join("　→　"));
+    item.appendChild(chain);
+  }
+
+  var acts = el("div", "qnav");
+  var redo1 = el("button", "btn sm primary", "重做本题");
+  redo1.addEventListener("click", function () { redoQuestion(q.id); });
+  acts.appendChild(redo1);
+  if (!(state.examPaper && state.examPaper.submitted) && state.answers[q.id] !== undefined) {
+    var clear1 = el("button", "btn sm", "清除本题当前作答");
+    clear1.addEventListener("click", function () {
+      state.answers[q.id] = objectiveOf(q) ? [] : "";
+      save(); render();
+    });
+    acts.appendChild(clear1);
+  }
+  item.appendChild(acts);
+  return item;
+}
+
+/* ================= 学习报告 ================= */
+function topicStatsFromHistory() {
+  var stats = {};
+  qs().forEach(function (q) {
+    var n = topicName(q);
+    stats[n] = stats[n] || { r: 0, t: 0 };
+    var h = state.qHistory[q.id] || [];
+    h.forEach(function (rec) { stats[n].t++; if (rec.ok) stats[n].r++; });
+  });
+  return stats;
+}
+function renderReport() {
+  $("toolbar").hidden = false;
+  var tb = $("toolbar-inner");
+  tb.textContent = "";
+  tb.appendChild(el("span", "progress", "学习报告"));
+  var back = el("button", "btn sm", "返回首页");
+  back.addEventListener("click", goHome);
+  tb.appendChild(back);
+
+  var box = $("view");
+  box.textContent = "";
+
+  var card = el("div", "card");
+  card.appendChild(el("h2", null, "学习报告")).style.cssText = "margin:0 0 8px;font-size:17px";
+  var totalAns = 0, totalOk = 0;
+  var stats = topicStatsFromHistory();
+  Object.keys(stats).forEach(function (n) { totalAns += stats[n].t; totalOk += stats[n].r; });
+  card.appendChild(el("div", null, "累计练习 " + state.attempts.length + " 次 · 累计作答 " + totalAns + " 题次 · 总正确率 " + pct(totalOk, totalAns) + "%"));
+  card.appendChild(el("div", "muted", "掌握度口径：考点历史答对次数 ÷ 该考点作答总次数（含练习、考试、复练全部记录）。这是答题统计，不是对学生真实能力的模型测量。"));
+
+  // 考点掌握度
+  var mastHead = el("div");
+  mastHead.style.margin = "12px 0 2px";
+  mastHead.appendChild(el("b", null, "考点掌握情况（薄弱在前）"));
+  card.appendChild(mastHead);
+  var names = Object.keys(stats).filter(function (n) { return stats[n].t > 0; });
+  names.sort(function (a, b) { return stats[a].r / stats[a].t - stats[b].r / stats[b].t; });
+  names.forEach(function (n) {
+    var row = el("div", "mrow");
+    row.appendChild(el("span", "name", n));
+    var bar = el("div", "bar");
+    var fill = el("i", stats[n].r / stats[n].t < 0.5 ? "low" : "");
+    fill.style.width = pct(stats[n].r, stats[n].t) + "%";
+    bar.appendChild(fill);
+    row.appendChild(bar);
+    row.appendChild(el("span", "pct", stats[n].r + "/" + stats[n].t + "（" + pct(stats[n].r, stats[n].t) + "%）"));
+    card.appendChild(row);
+  });
+  if (!names.length) card.appendChild(el("div", "muted", "还没有作答记录。"));
+
+  // 建议复习顺序
+  var weak = names.filter(function (n) { return stats[n].t >= 1 && stats[n].r / stats[n].t < 0.8; });
+  if (weak.length) {
+    var sugHead = el("div");
+    sugHead.style.margin = "12px 0 2px";
+    sugHead.appendChild(el("b", null, "建议复习顺序（正确率升序）"));
+    card.appendChild(sugHead);
+    weak.forEach(function (n, i) {
+      card.appendChild(el("div", "muted", (i + 1) + ". " + n + "（当前 " + pct(stats[n].r, stats[n].t) + "%）"));
+    });
+    var sug = el("div", "row");
+    sug.style.marginTop = "8px";
+    var btn = el("button", "btn primary sm", "按薄弱考点开练");
+    btn.addEventListener("click", function () {
+      var ids = qs().filter(function (q) { return weak.indexOf(topicName(q)) >= 0; }).map(function (q) { return q.id; });
+      startSession("practice", ids);
+    });
+    sug.appendChild(btn);
+    card.appendChild(sug);
+  }
+
+  // 历次练习
+  var histHead = el("div");
+  histHead.style.margin = "12px 0 2px";
+  histHead.appendChild(el("b", null, "历次练习成绩"));
+  card.appendChild(histHead);
+  if (state.attempts.length) {
+    var tbl = el("table", "hist");
+    var trh = el("tr");
+    ["时间", "类型", "成绩", "正确率"].forEach(function (h) { trh.appendChild(el("th", null, h)); });
+    tbl.appendChild(trh);
+    state.attempts.slice().reverse().forEach(function (a) {
+      var tr = el("tr");
+      tr.appendChild(el("td", null, fmtTime(a.t)));
+      tr.appendChild(el("td", null, a.mode === "redo" ? "错题复练" : (a.mode === "exam" ? "考试" : "练习")));
+      tr.appendChild(el("td", null, a.correct + "/" + a.total));
+      tr.appendChild(el("td", null, pct(a.correct, a.total) + "%"));
+      tbl.appendChild(tr);
+    });
+    card.appendChild(tbl);
+    var redos = state.attempts.filter(function (a) { return a.mode === "redo"; });
+    if (redos.length) {
+      card.appendChild(el("div", "muted", "复练改善：共完成 " + redos.length + " 次错题复练，合计纠正 " +
+        redos.reduce(function (s, a) { return s + a.correct; }, 0) + " 道错题（详见错题中心的前后对比）。"));
+    }
+  } else {
+    card.appendChild(el("div", "muted", "暂无练习记录。"));
+  }
+
+  // 导出 / 导入
+  var ioHead = el("div");
+  ioHead.style.margin = "12px 0 6px";
+  ioHead.appendChild(el("b", null, "学习记录备份"));
+  card.appendChild(ioHead);
+  var io = el("div", "row");
+  var exp = el("button", "btn sm", "导出学习记录");
+  exp.addEventListener("click", exportData);
+  io.appendChild(exp);
+  var fileInput = document.createElement("input");
+  fileInput.type = "file";
+  fileInput.accept = ".json,application/json";
+  fileInput.style.display = "none";
+  fileInput.id = "import-file";
+  var imp = el("button", "btn sm", "导入学习记录");
+  imp.addEventListener("click", function () { fileInput.click(); });
+  io.appendChild(imp);
+  var reset = el("button", "btn sm danger", "清空全部记录");
+  reset.addEventListener("click", function () {
+    if (!confirm("确定清空本题库的全部作答与学习记录吗？（导出的备份不受影响）")) return;
+    state = defaultState();
+    save();
+    goHome();
+  });
+  io.appendChild(reset);
+  card.appendChild(io);
+  card.appendChild(fileInput);
+  fileInput.addEventListener("change", importData);
+  card.appendChild(el("div", "muted", "导出为 JSON 文件保存在本地；换设备或清浏览器数据后可导入恢复。"));
+  box.appendChild(card);
+}
+
+function exportData() {
+  try {
+    var payload = { app: "courseware-quiz-builder", v: 3, title: QUIZ.title,
+                    exported_at: ts(), state: state };
+    var blob = new Blob([JSON.stringify(payload, null, 1)], { type: "application/json" });
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "学习记录-" + (QUIZ.title || "题库") + ".json";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 3000);
+  } catch (e) {
+    alert("导出失败：" + e + "\n可手动复制：在学习报告页按 F12 控制台输入 state 查看。");
+  }
+}
+function importData(ev) {
+  var f = ev.target.files && ev.target.files[0];
+  if (!f) return;
+  var reader = new FileReader();
+  reader.onload = function () {
+    try {
+      var d = JSON.parse(reader.result);
+      if (!d || typeof d !== "object") { alert("导入失败：不是有效的 JSON 对象。"); return; }
+      /* V2-05：先 Schema 校验后应用，不合法绝不改动当前状态 */
+      var st = (d.state && typeof d.state === "object") ? d.state : d;
+      var errRef = {};
+      var ns = normalizeState(st, errRef);
+      if (!ns) {
+        alert("导入失败：" + (errRef.msg || "学习记录结构校验未通过（需 v2/v3 格式）"));
+        return;
+      }
+      if (d.title && d.title !== QUIZ.title) {
+        if (!confirm("该记录来自题库「" + d.title + "」，与当前题库不同，仍要导入吗？")) return;
+      }
+      /* P0-4：导入不得覆盖进行中的考试（先交卷或放弃后再导入） */
+      if (state.examPaper && !state.examPaper.submitted) {
+        alert("当前有未交卷的考试，导入已被拒绝。请先交卷，或在首页选择「放弃本次考试」后再导入。");
+        return;
+      }
+      if (!confirm("导入将覆盖当前全部作答与学习记录，确定吗？")) return;
+      state = ns;
+      save();
+      goHome();
+      alert("导入成功。");
+    } catch (e) {
+      alert("导入失败：不是有效的 JSON。");
+    }
+  };
+  reader.readAsText(f, "utf-8");
+  ev.target.value = "";
+}
+
+/* ================= 键盘操作 ================= */
+document.addEventListener("keydown", function (e) {
+  var tag = (e.target && e.target.tagName) || "";
+  if (tag === "TEXTAREA" || tag === "INPUT" || tag === "SELECT") return;
+  if (view !== "quiz" || !session) return;
+  if (e.key === "ArrowLeft") { if (session.idx > 0) { session.idx--; render(); } return; }
+  if (e.key === "ArrowRight") { if (session.idx < session.qids.length - 1) { session.idx++; render(); } return; }
+  if (e.key === "f" || e.key === "F") {
+    var q = sessionQ(session.idx);
+    state.flags[q.id] = !state.flags[q.id];
+    save(); render(); return;
+  }
+    var n = parseInt(e.key, 10);
+  if (n >= 1 && n <= 8) {
+    var q2 = sessionQ(session.idx);
+    if (q2.type === "short" || !q2.options || n > q2.options.length) return;
+    var idx = n - 1;
+    if (examActive()) {
+      var cur = state.answers[q2.id] || [];
+      if (q2.type === "multiple") {
+        var p = cur.indexOf(idx);
+        if (p >= 0) cur.splice(p, 1); else cur.push(idx);
+        state.answers[q2.id] = cur;
+      } else {
+        state.answers[q2.id] = [idx];
+      }
+      save(); render();
+    } else if (session.mode !== "exam") {
+    var latest = latestResult(q2.id);
+    var answered = isAnswered(q2) && session.graded && session.graded[q2.id] !== undefined;
+    if (!answered) {
+      // 与点击选项一致：练习模式下由选项点击路径自动判分，这里模拟点击
+      var btns = document.querySelectorAll(".opt");
+      if (btns[idx]) btns[idx].click();
+    }
+    }
+  }
+});
+
+/* ================= 元信息与渲染入口 ================= */
+function renderMeta() {
+  document.title = QUIZ.title;
+  $("quiz-title").textContent = QUIZ.title;
+  var meta = $("quiz-meta");
+  meta.textContent = "";
+  meta.appendChild(el("span", "chip", "来源：" + (QUIZ.source_desc || "未标注")));
+  var c = { single: 0, multiple: 0, judge: 0, short: 0 };
+  qs().forEach(function (q) { c[q.type]++; });
+  var parts = [];
+  ["single", "multiple", "judge", "short"].forEach(function (t) { if (c[t]) parts.push(TYPE_NAME[t] + c[t]); });
+  meta.appendChild(el("span", "chip", "题量：" + qs().length + "（" + parts.join(" ") + "）"));
+  if (QUIZ.generated_date) meta.appendChild(el("span", "chip", "生成：" + QUIZ.generated_date));
+  /* v2.1 门禁元信息：preview 草稿醒目横幅 + 核验结论 chip */
+  var gate = QUIZ._gate;
+  var gb = $("gate-banner");
+  if (gb) {
+    if (gate && gate.draft) {
+      gb.hidden = false;
+      gb.textContent = "";
+      gb.appendChild(el("b", null, "⚠ 草稿·未通过完整核验："));
+      gb.appendChild(document.createTextNode(
+        "本刷题页由 preview 模式生成（" + (gate.mode || "preview") + "，验证结论 " + (gate.validation || gate.overall || "?") +
+        "，发布状态 " + (gate.release || "DRAFT_ONLY") +
+        "），存在未通过验证项（详见 validation-report.json），仅供预览，不得作为正式交付物使用。"));
+    } else {
+      gb.hidden = true;
+      gb.textContent = "";
+    }
+  }
+  if (gate) {
+    meta.appendChild(el("span", "chip", "核验：" + (gate.validation || gate.overall || "?") + " · 发布：" + (gate.release || (gate.mode === "preview" ? "DRAFT_ONLY" : "READY")) + " · " + (gate.mode || "?") + "模式"));
+  }
+  $("crumb").textContent = crumbText();
+}
+function render() {
+  renderMeta();
+  if (view === "quiz" && session) renderQuiz();
+  else if (view === "results") renderResults();
+  else if (view === "wrong") renderWrong();
+  else if (view === "report") renderReport();
+  else renderHome();
+}
+
+/* ================= 启动 ================= */
+detectStorage();
+if (!storageOK) showStorageBanner();
+state = defaultState();
+restore();
+if (!state) state = defaultState();
+/* P0-4：按试卷状态恢复视图 —— 进行中 → 继续考试；已交卷 → 成绩与解析 */
+if (state.examPaper && !state.examPaper.submitted && state.examPaper.qids.length) {
+  resumeExam();
+} else if (state.examPaper && state.examPaper.submitted) {
+  view = "results";
+} else if (Object.keys(state.answers).length > 0) {
+  view = "home";  // 首页会提供“继续练习”
+}
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+{
+ "title": "dataURL合法测试",
+ "source_desc": "合成测试材料（good.pptx/good.docx/notes.md），无真实用户数据",
+ "generated_date": "2026-11-12",
+ "manifest": "manifest.json",
+ "topics": [
+  {
+   "id": "T1",
+   "name": "栈与队列"
+  },
+  {
+   "id": "T2",
+   "name": "线性表"
+  },
+  {
+   "id": "T3",
+   "name": "树与遍历"
+  }
+ ],
+ "questions": [
+  {
+   "id": "Q1",
+   "type": "single",
+   "difficulty": "易",
+   "topic": "栈与队列",
+   "topic_id": "T1",
+   "knowledge_type": "definition",
+   "source_ref": "课件第1页",
+   "source_id": "S1",
+   "segment_id": "S1:P1",
+   "source_quote": "队列是先进先出的线性表",
+   "evidence_status": "semantic-pass",
+   "stem": "队列采用哪种存取方式？",
+   "options": [
+    "先进先出",
+    "后进先出",
+    "随机访问",
+    "两端进中间出"
+   ],
+   "answer": [
+    0
+   ],
+   "explanation": "材料原文明确“队列是先进先出的线性表”，故选A。B 是栈的特点，C 是顺序表特点。",
+   "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=="
+  }
+ ]
+}

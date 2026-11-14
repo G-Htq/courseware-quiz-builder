@@ -1,0 +1,203 @@
+{
+ "version": 2,
+ "generated_at": "2026-11-14T10:50:35",
+ "extractor": "extract_text.py v2",
+ "sources": [
+  {
+   "source_id": "S1",
+   "filename": "good.pptx",
+   "sha256": "f34ef3dc4b9c8de312f878e815d704154ea963b792bca613fa33710e45177b29",
+   "size_bytes": 3029,
+   "format": "pptx",
+   "status": "ok",
+   "error": null,
+   "segments": [
+    {
+     "segment_id": "S1:P1",
+     "source_id": "S1",
+     "type": "slide",
+     "label": "第1页",
+     "chapter": null,
+     "text": "队列是先进先出的线性表\n结构 | 特点\n栈 | 后进先出\n队列 | 先进先出",
+     "images": []
+    },
+    {
+     "segment_id": "S1:P2",
+     "source_id": "S1",
+     "type": "slide",
+     "label": "第2页",
+     "chapter": null,
+     "text": "堆栈是后进先出的线性表",
+     "images": []
+    },
+    {
+     "segment_id": "S1:P3",
+     "source_id": "S1",
+     "type": "slide",
+     "label": "第3页",
+     "chapter": null,
+     "text": "图的三种存储结构",
+     "images": [
+      "slide3_img1.png"
+     ]
+    }
+   ],
+   "images": [
+    "slide3_img1.png"
+   ],
+   "stats": {
+    "chars": 57,
+    "pages": 3,
+    "images": 1,
+    "segments": 3
+   }
+  },
+  {
+   "source_id": "S2",
+   "filename": "good.docx",
+   "sha256": "8c192188b8aa002e9fdb2f8c2cb2eb28a6d03098d38a05f980b3e9a0110407b6",
+   "size_bytes": 1234,
+   "format": "docx",
+   "status": "ok",
+   "error": null,
+   "segments": [
+    {
+     "segment_id": "S2:B1",
+     "source_id": "S2",
+     "type": "paragraph",
+     "label": "段落1",
+     "chapter": "第二章 线性表",
+     "text": "第二章 线性表",
+     "images": []
+    },
+    {
+     "segment_id": "S2:B2",
+     "source_id": "S2",
+     "type": "paragraph",
+     "label": "段落2",
+     "chapter": "第二章 线性表",
+     "text": "线性表是最基本、最简单的一种数据结构，由 n 个具有相同性质的数据元素组成。",
+     "images": []
+    },
+    {
+     "segment_id": "S2:B3",
+     "source_id": "S2",
+     "type": "paragraph",
+     "label": "段落3",
+     "chapter": "第二章 线性表",
+     "text": "顺序表支持随机访问，链表支持高效插入删除。",
+     "images": []
+    },
+    {
+     "segment_id": "S2:B4",
+     "source_id": "S2",
+     "type": "table",
+     "label": "表格块4",
+     "chapter": "第二章 线性表",
+     "text": "遍历方式 | 时间复杂度\n层序遍历 | O(n)\n中序遍历 | O(n)",
+     "images": []
+    },
+    {
+     "segment_id": "S2:B5",
+     "source_id": "S2",
+     "type": "paragraph",
+     "label": "段落5",
+     "chapter": "第二章 线性表",
+     "text": "",
+     "images": [
+      "docx_img1.png"
+     ]
+    },
+    {
+     "segment_id": "S2:B6",
+     "source_id": "S2",
+     "type": "paragraph",
+     "label": "段落6",
+     "chapter": "第二章 线性表",
+     "text": "本章小结：线性表是后续栈与队列的基础。",
+     "images": []
+    }
+   ],
+   "images": [
+    "docx_img1.png"
+   ],
+   "stats": {
+    "chars": 121,
+    "pages": 0,
+    "images": 1,
+    "segments": 6
+   }
+  },
+  {
+   "source_id": "S3",
+   "filename": "notes.md",
+   "sha256": "ce693cdee57a2a853badbd94c6fc6b5fec97d1ca568bfa61b2b97b487cc2b36f",
+   "size_bytes": 296,
+   "format": "md",
+   "status": "ok",
+   "error": null,
+   "segments": [
+    {
+     "segment_id": "S3:B1",
+     "source_id": "S3",
+     "type": "heading",
+     "label": "第1行",
+     "chapter": "数据结构复习笔记",
+     "text": "# 数据结构复习笔记",
+     "images": []
+    },
+    {
+     "segment_id": "S3:B2",
+     "source_id": "S3",
+     "type": "paragraph",
+     "label": "第3行",
+     "chapter": "数据结构复习笔记",
+     "text": "二叉树的性质：第 i 层最多有 2 的 i 减 1 次方个节点。",
+     "images": []
+    },
+    {
+     "segment_id": "S3:B3",
+     "source_id": "S3",
+     "type": "paragraph",
+     "label": "第5行",
+     "chapter": "数据结构复习笔记",
+     "text": "完全二叉树的节点总数介于 2 的 h 减 1 次方与 2 的 h 次方减 1 之间。",
+     "images": []
+    },
+    {
+     "segment_id": "S3:B4",
+     "source_id": "S3",
+     "type": "heading",
+     "label": "第7行",
+     "chapter": "树的遍历",
+     "text": "## 树的遍历",
+     "images": []
+    },
+    {
+     "segment_id": "S3:B5",
+     "source_id": "S3",
+     "type": "paragraph",
+     "label": "第9行",
+     "chapter": "树的遍历",
+     "text": "先序遍历顺序为根左右，中序为左根右，后序为左右根。",
+     "images": []
+    }
+   ],
+   "images": [],
+   "stats": {
+    "chars": 116,
+    "pages": 0,
+    "images": 0,
+    "segments": 5
+   }
+  }
+ ],
+ "totals": {
+  "sources": 3,
+  "ok": 3,
+  "failed": 0,
+  "chars": 294,
+  "segments": 14,
+  "images": 2
+ }
+}

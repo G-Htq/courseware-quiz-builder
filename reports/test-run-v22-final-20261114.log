@@ -1,0 +1,220 @@
+﻿Run date: 2026-11-14 10:50:55 | runner: tests/run_tests.py | fact source: skill-src（冻结版）
+python : test_invalid_mode_rejected (test_build_gate.TestBuildGate.test_invalid_mode_rejected)
+At line:16 char:8
++ $out = python "F:\Project\新建文件夹\课件智练v2\tests\run_tests.py" 2>&1 | Out ...
++        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (test_invalid_mo..._mode_rejected):String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+非法 --mode：argparse 拒绝（exit 2，错误信息在 stderr）。 ... ok
+test_preview_allows_draft_with_labels (test_build_gate.TestBuildGate.test_preview_allows_draft_with_labels)
+层B 失败在 preview 下放行，但文件名/MD/HTML/报告四处标注草稿。 ... ok
+test_preview_still_blocks_layer_a (test_build_gate.TestBuildGate.test_preview_still_blocks_layer_a)
+preview 只放行非结构失败：层A 缺 source_quote 仍阻断。 ... ok
+test_report_contract_fields (test_build_gate.TestBuildGate.test_report_contract_fields) ... ok
+test_strict_blocked_preserves_stale_products (test_build_gate.TestBuildGate.test_strict_blocked_preserves_stale_product
+s)
+v2.2 契约：同一个题库先成功后失败 → 不删除旧产物（不破坏已验证成果）， ... ok
+test_strict_blocks_contradiction (test_build_gate.TestBuildGate.test_strict_blocks_contradiction)
+解析结论与答案矛盾（层A）→ 阻断。 ... ok
+test_strict_blocks_evidence_stripping (test_build_gate.TestBuildGate.test_strict_blocks_evidence_stripping)
+证据剥离防护：有 manifest 但全部证据链字段被删 → B-EVIDENCE-STRIPPED 阻断。 ... ok
+test_strict_blocks_layer_b_failure (test_build_gate.TestBuildGate.test_strict_blocks_layer_b_failure)
+V2-02 修复：层B 引用错位必须 exit 1 且零产物。 ... ok
+test_strict_blocks_missing_manifest (test_build_gate.TestBuildGate.test_strict_blocks_missing_manifest) ... ok
+test_strict_passes_with_report_and_gate (test_build_gate.TestBuildGate.test_strict_passes_with_report_and_gate) ... ok
+test_unresolved_marked_not_verified (test_build_gate.TestBuildGate.test_unresolved_marked_not_verified)
+语义 unresolved：不冒充通过——overall 不得为 PASS，findings 记录 NOT_VERIFIED。 ... ok
+test_verify_report_flag (test_build_gate.TestBuildGate.test_verify_report_flag) ... ok
+test_bad_zip (test_extract_text.TestDegradation.test_bad_zip) ... ok
+test_empty_and_blank (test_extract_text.TestDegradation.test_empty_and_blank) ... ok
+test_missing_file (test_extract_text.TestDegradation.test_missing_file) ... ok
+test_size_limit (test_extract_text.TestDegradation.test_size_limit) ... ok
+test_unsupported_format (test_extract_text.TestDegradation.test_unsupported_format) ... ok
+test_zip_bomb_rejected (test_extract_text.TestDegradation.test_zip_bomb_rejected) ... ok
+test_docx_hidden_text_filtered (test_extract_text.TestParse.test_docx_hidden_text_filtered)
+w:vanish 隐藏文本（AIGC 标识）不进入正文。 ... ok
+test_docx_image_in_manifest (test_extract_text.TestParse.test_docx_image_in_manifest) ... ok
+test_docx_paragraphs_and_chapter (test_extract_text.TestParse.test_docx_paragraphs_and_chapter) ... ok
+test_docx_table (test_extract_text.TestParse.test_docx_table) ... ok
+test_manifest_structure (test_extract_text.TestParse.test_manifest_structure) ... ok
+test_md_headings_as_chapters (test_extract_text.TestParse.test_md_headings_as_chapters) ... ok
+test_multiple_sources_and_ids (test_extract_text.TestParse.test_multiple_sources_and_ids) ... ok
+test_pptx_attributed_text_node (test_extract_text.TestParse.test_pptx_attributed_text_node)
+A1 修复：<a:t xml:space="preserve"> 带属性节点必须被提取。 ... ok
+test_pptx_presentation_order (test_extract_text.TestParse.test_pptx_presentation_order)
+按 presentation.xml sldIdLst 解析真实顺序，而非文件名序。 ... ok
+test_pptx_table_structure (test_extract_text.TestParse.test_pptx_table_structure)
+表格行列结构保留（| 与换行分隔）。 ... ok
+test_pptx_watermark_filtered (test_extract_text.TestParse.test_pptx_watermark_filtered)
+平台水印形状（*Watermark*）不进入片段文本。 ... ok
+test_all_bad_batch_still_writes_manifest (test_office_edge_cases.TestOfficeEdgeCases.test_all_bad_batch_still_writes_ma
+nifest)
+全部失败：exit 1，manifest 仍生成且每个来源记录 error（诚实记录）。 ... ok
+test_edge_files_report_without_traceback (test_office_edge_cases.TestOfficeEdgeCases.test_edge_files_report_without_tra
+ceback)
+6 类边界文件：明确 [失败]+原因，exit 1，无 Traceback。 ... ok
+test_edge_reasons_are_specific (test_office_edge_cases.TestOfficeEdgeCases.test_edge_reasons_are_specific)
+失败原因指向具体缺陷，而非笼统报错。 ... ok
+test_mixed_batch_isolation (test_office_edge_cases.TestOfficeEdgeCases.test_mixed_batch_isolation)
+坏文件（2 个）不破坏好文件（2 个）：manifest 各自记录 status 与 error。 ... ok
+test_success_exit_code_zero (test_office_edge_cases.TestOfficeEdgeCases.test_success_exit_code_zero)
+全部成功：exit 0（契约回归）。 ... ok
+test_absolute_path_rejected (test_path_security.TestPathSecurity.test_absolute_path_rejected) ... ok
+test_data_url_allowed (test_path_security.TestPathSecurity.test_data_url_allowed) ... ok
+test_dotdot_backslash_escape_rejected (test_path_security.TestPathSecurity.test_dotdot_backslash_escape_rejected) ... o
+k
+test_dotdot_escape_rejected (test_path_security.TestPathSecurity.test_dotdot_escape_rejected) ... ok
+test_fake_png_still_rejected (test_path_security.TestPathSecurity.test_fake_png_still_rejected)
+目录内但内容伪装（魔数不符）→ 拒绝。 ... ok
+test_file_protocol_rejected (test_path_security.TestPathSecurity.test_file_protocol_rejected) ... ok
+test_in_tree_backslash_allowed (test_path_security.TestPathSecurity.test_in_tree_backslash_allowed)
+Windows 语义：目录内反斜杠分隔符等价相对路径 → 通过（非穿越）。 ... ok
+test_in_tree_forward_slash_allowed (test_path_security.TestPathSecurity.test_in_tree_forward_slash_allowed)
+目录内合法引用（正斜杠）→ 通过。 ... ok
+test_missing_in_tree_file_rejected (test_path_security.TestPathSecurity.test_missing_in_tree_file_rejected) ... ok
+test_protocol_link_rejected (test_path_security.TestPathSecurity.test_protocol_link_rejected) ... ok
+test_svg_rejected (test_path_security.TestPathSecurity.test_svg_rejected)
+svg 可携带脚本，不收录。 ... ok
+test_bad_quote_rejected (test_quiz_validation.TestLayerAEvidenceAndImages.test_bad_quote_rejected) ... ok
+test_bad_segment_rejected (test_quiz_validation.TestLayerAEvidenceAndImages.test_bad_segment_rejected) ... ok
+test_bad_source_rejected (test_quiz_validation.TestLayerAEvidenceAndImages.test_bad_source_rejected) ... ok
+test_bad_status_rejected (test_quiz_validation.TestLayerAEvidenceAndImages.test_bad_status_rejected) ... ok
+test_duplicate_and_bad_answer_still_caught (test_quiz_validation.TestLayerAEvidenceAndImages.test_duplicate_and_bad_ans
+wer_still_caught) ... ok
+test_explain_answer_contradiction_rejected (test_quiz_validation.TestLayerAEvidenceAndImages.test_explain_answer_contra
+diction_rejected)
+v2.1：解析结论（故选B）与 answer（A）矛盾 → 拒绝（rule_id 在 build 门禁/报告中验证）。 ... ok
+test_fake_png_magic_rejected (test_quiz_validation.TestLayerAEvidenceAndImages.test_fake_png_magic_rejected)
+目录内伪 PNG（魔数不符）→ 拒绝（夹具由 make_quiz_fixtures.py 生成）。 ... ok
+test_good_quiz_passes (test_quiz_validation.TestLayerAEvidenceAndImages.test_good_quiz_passes) ... ok
+test_in_tree_image_ok (test_quiz_validation.TestLayerAEvidenceAndImages.test_in_tree_image_ok)
+目录内 imgs/real.png 合法引用 → validate 通过。 ... ok
+test_legacy_quiz_compatible (test_quiz_validation.TestLayerAEvidenceAndImages.test_legacy_quiz_compatible)
+旧格式（无证据字段）兼容：validate 通过但提示无法来源核验。 ... ok
+test_no_manifest_skips_honestly (test_quiz_validation.TestLayerAEvidenceAndImages.test_no_manifest_skips_honestly)
+未提供任何 manifest 时：明确说明跳过，不伪装已验证。 ... ok
+test_parent_escape_rejected (test_quiz_validation.TestLayerAEvidenceAndImages.test_parent_escape_rejected)
+v2.1（V2-03）：../materials/... 穿越 → 路径越界拒绝。 ... ok
+test_partial_evidence_rejected (test_quiz_validation.TestLayerAEvidenceAndImages.test_partial_evidence_rejected) ... ok
+test_build_repeat_idempotent (test_release_gate_v22.TestAtomicBuild.test_build_repeat_idempotent)
+重复执行：连续两次成功构建，产物被原子替换（第二次为最新，无草稿混入）。 ... ok
+test_draft_and_formal_products_isolated (test_release_gate_v22.TestAtomicBuild.test_draft_and_formal_products_isolated)
+草稿与正式产物隔离：同名题库 draft 与正式文件并存互不覆盖。 ... ok
+test_render_failure_leaves_no_artifacts (test_release_gate_v22.TestAtomicBuild.test_render_failure_leaves_no_artifacts)
+渲染期异常：无半成品、无 tmp 残留、旧正式产物完好、报告 BLOCKED。 ... ok
+test_mixed_evidence_blocked (test_release_gate_v22.TestPerQuestionGate.test_mixed_evidence_blocked) ... ok
+test_mixed_evidence_preview_is_draft (test_release_gate_v22.TestPerQuestionGate.test_mixed_evidence_preview_is_draft)
+preview 下逐题缺失允许草稿（DRAFT_ONLY），但文件名/横幅/报告三处标注。 ... ok
+test_semantic_not_executed_blocks_strict (test_release_gate_v22.TestPerQuestionGate.test_semantic_not_executed_blocks_s
+trict)
+语义未执行（NOT_VERIFIED）在 strict 下阻断正式发布（用户 3.2 策略）。 ... ok
+test_exit_code_matrix_build (test_release_gate_v22.TestStatusAndExitCodes.test_exit_code_matrix_build) ... ok
+test_exit_code_matrix_verify (test_release_gate_v22.TestStatusAndExitCodes.test_exit_code_matrix_verify) ... ok
+test_input_digest_present (test_release_gate_v22.TestStatusAndExitCodes.test_input_digest_present) ... ok
+test_report_stdout_json (test_release_gate_v22.TestStatusAndExitCodes.test_report_stdout_json)
+--report - 输出机器可读 JSON 到 stdout（JSON 后仍有人类可读行，用 raw_decode 截取）。 ... ok
+test_status_no_contradiction (test_release_gate_v22.TestStatusAndExitCodes.test_status_no_contradiction)
+V22-E1 回归：任何场景报告不得出现 validation=PASS 而发布被阻断的组合。 ... ok
+test_verify_no_manifest_exit_nonzero (test_release_gate_v22.TestStatusAndExitCodes.test_verify_no_manifest_exit_nonzero
+)
+V22-E2：无 manifest（关键检查未执行）→ exit 1 且 checks 明示 UNAVAILABLE。 ... ok
+test_broken_json (test_schema_v22.TestSchemaMatrix.test_broken_json) ... ok
+test_empty_object_missing_questions (test_schema_v22.TestSchemaMatrix.test_empty_object_missing_questions) ... ok
+test_huge_input_no_hang (test_schema_v22.TestSchemaMatrix.test_huge_input_no_hang)
+超大输入不得挂死（题目数多+超长题干）；查重截断防护生效。 ... ok
+test_invalid_image_data_url (test_schema_v22.TestSchemaMatrix.test_invalid_image_data_url) ... ok
+test_nested_wrong_types (test_schema_v22.TestSchemaMatrix.test_nested_wrong_types) ... ok
+test_options_count_and_unknown_type (test_schema_v22.TestSchemaMatrix.test_options_count_and_unknown_type) ... ok
+test_question_id_missing_and_duplicate (test_schema_v22.TestSchemaMatrix.test_question_id_missing_and_duplicate) ... ok
+test_questions_all_strings (test_schema_v22.TestSchemaMatrix.test_questions_all_strings) ... ok
+test_questions_empty_list (test_schema_v22.TestSchemaMatrix.test_questions_empty_list) ... ok
+test_questions_is_string (test_schema_v22.TestSchemaMatrix.test_questions_is_string) ... ok
+test_questions_mixed_types (test_schema_v22.TestSchemaMatrix.test_questions_mixed_types) ... ok
+test_schema_failure_still_writes_report (test_schema_v22.TestSchemaMatrix.test_schema_failure_still_writes_report) ... 
+ok
+test_top_level_empty_array (test_schema_v22.TestSchemaMatrix.test_top_level_empty_array) ... ok
+test_top_level_null (test_schema_v22.TestSchemaMatrix.test_top_level_null) ... ok
+test_top_level_string_number (test_schema_v22.TestSchemaMatrix.test_top_level_string_number) ... ok
+test_verify_top_list_structured (test_schema_v22.TestSchemaMatrix.test_verify_top_list_structured) ... ok
+test_injected_instruction_is_data_only (test_security_v22.TestMaterialPromptInjection.test_injected_instruction_is_data
+_only)
+合成材料 notes.md 含指令性文本（make_fixtures 生成）→ 解析为片段文本。 ... ok
+test_skill_md_has_injection_clause (test_security_v22.TestMaterialPromptInjection.test_skill_md_has_injection_clause) .
+.. ok
+test_frontend_image_whitelist_blocks_javascript_url (test_security_v22.TestNoUntrustedResources.test_frontend_image_whi
+telist_blocks_javascript_url)
+前端 safeImgSrc：javascript: 协议被拒（静态断言白名单正则存在）。 ... ok
+test_product_has_no_external_resources (test_security_v22.TestNoUntrustedResources.test_product_has_no_external_resourc
+es) ... ok
+test_template_has_no_external_resources (test_security_v22.TestNoUntrustedResources.test_template_has_no_external_resou
+rces) ... ok
+test_build_succeeds_with_hostile_content (test_security_v22.TestOutputInjection.test_build_succeeds_with_hostile_conten
+t)
+恶意内容为数据不阻断构建（转义处理）。 ... ok
+test_html_no_onerror_attribute (test_security_v22.TestOutputInjection.test_html_no_onerror_attribute)
+onerror 不得出现在标签属性位置（<tag ... onerror=）； ... ok
+test_html_no_raw_script_close (test_security_v22.TestOutputInjection.test_html_no_raw_script_close)
+题干中的 </script> 不得原样进入 QUIZ_DATA（防提前闭合注入）。 ... ok
+test_md_no_raw_link_injection (test_security_v22.TestOutputInjection.test_md_no_raw_link_injection) ... ok
+test_scripts_compile (test_skill_structure.TestSkillStatic.test_scripts_compile) ... ok
+test_scripts_exist (test_skill_structure.TestSkillStatic.test_scripts_exist) ... ok
+test_skill_md_frontmatter (test_skill_structure.TestSkillStatic.test_skill_md_frontmatter) ... ok
+test_skill_md_mentions_gate_modes (test_skill_structure.TestSkillStatic.test_skill_md_mentions_gate_modes)
+SKILL.md 必须说明 strict/preview 门禁（文档与实现一致）。 ... ok
+test_template_has_v21_frontend_features (test_skill_structure.TestSkillStatic.test_template_has_v21_frontend_features)
+v2.1 前端关键静态特征：草稿横幅容器、考试状态机、导入 Schema 校验。 ... ok
+test_template_placeholder (test_skill_structure.TestSkillStatic.test_template_placeholder) ... ok
+test_normal_quote_no_quality_findings (test_source_integrity_v22.TestQuoteQuality.test_normal_quote_no_quality_findings
+) ... ok
+test_repeated_quote_flagged (test_source_integrity_v22.TestQuoteQuality.test_repeated_quote_flagged)
+短引用在片段内多次出现 → B-QUOTE-UNIQUE（定位歧义提示）。 ... ok
+test_thin_quote_flagged (test_source_integrity_v22.TestQuoteQuality.test_thin_quote_flagged)
+V22-D：1-2 字引用 → 定位通过但标注证据过短（WARN，不冒充完整证据）。 ... ok
+test_thin_quote_not_blocking_strict (test_source_integrity_v22.TestQuoteQuality.test_thin_quote_not_blocking_strict)
+短证据是质量提醒（WARN），不阻断正式发布（语义层保持独立判断）。 ... ok
+test_bad_source_and_segment_still_rejected (test_source_integrity_v22.TestRefIntegrity.test_bad_source_and_segment_stil
+l_rejected) ... ok
+test_canonical_ref_in_products (test_source_integrity_v22.TestRefIntegrity.test_canonical_ref_in_products)
+正常题库产物：HTML 注入 canonical_ref 且 MD 出处用真实定位。 ... ok
+test_fake_ref_blocks_strict_build (test_source_integrity_v22.TestRefIntegrity.test_fake_ref_blocks_strict_build) ... ok
+test_fake_ref_rejected_by_verify (test_source_integrity_v22.TestRefIntegrity.test_fake_ref_rejected_by_verify)
+V22-C：source_ref 写"课件第999页"（真实第 1 页）→ FAIL + canonical 展示 + 矛盾细节。 ... ok
+test_hash_mismatch_detected (test_source_integrity_v22.TestSourceFileIntegrity.test_hash_mismatch_detected)
+材料被替换（同名字节不同）→ B-SOURCE-HASH FAIL，verify exit 1。 ... ok
+test_hash_unavailable_stated_honestly (test_source_integrity_v22.TestSourceFileIntegrity.test_hash_unavailable_stated_h
+onestly)
+原始文件不可达 → UNAVAILABLE + 明示"仅验证清单内一致性"。 ... ok
+test_hash_verified_when_source_root_given (test_source_integrity_v22.TestSourceFileIntegrity.test_hash_verified_when_so
+urce_root_given)
+--source-root 指向真实材料目录 → 完整性 EXECUTED 且通过。 ... ok
+test_tampered_material_blocks_strict_build (test_source_integrity_v22.TestSourceFileIntegrity.test_tampered_material_bl
+ocks_strict_build) ... ok
+
+----------------------------------------------------------------------
+Ran 113 tests in 19.801s
+
+OK
+=== 题库质检报告 ===
+题库: 合成材料·证据链测试题库 | 题量: 4
+题型分布: 单选1 多选1 判断1 简答1
+难度分布: 易2 中2 难0
+结果: 通过（0 个错误, 0 个警告）
+[门禁] mode=strict | validation=WARN | release=READY | manifest=F:\Project\新建文件夹\课件智练v2\tests\quiz\manifest.json
+[输出] C:\Users\10579\AppData\Local\Temp\tmp0y_58b9v\validation-report.json（validation=WARN, release=READY）
+[输出] C:\Users\10579\AppData\Local\Temp\tmp0y_58b9v\题库-合成材料·证据链测试题库.md（2772 字节）
+[输出] C:\Users\10579\AppData\Local\Temp\tmp0y_58b9v\刷题页-合成材料·证据链测试题库.html（74488 字节）
+=== 题库质检报告 ===
+题库: 合成材料·证据链测试题库 | 题量: 4
+题型分布: 单选1 多选1 判断1 简答1
+难度分布: 易2 中2 难0
+结果: 通过（0 个错误, 0 个警告）
+[门禁] mode=strict | validation=WARN | release=READY | manifest=F:\Project\新建文件夹\课件智练v2\tests\quiz\manifest.json
+[渲染失败] 已中止本次构建（未产生半成品，旧正式产物未受影响）：RuntimeError: 模拟渲染中断：图片处理阶段故障
+[输出] C:\Users\10579\AppData\Local\Temp\tmp0y_58b9v\validation-report.json（release=BLOCKED，渲染失败）
+[注意] 本次构建未产出；以下为历史产物（不代表本次验证结果）:
+       旧产物 题库-合成材料·证据链测试题库.md（生成于 2026-11-14 10:50，按需手动删除）
+       旧产物 刷题页-合成材料·证据链测试题库.html（生成于 2026-11-14 10:50，按需手动删除）
+
+=== 汇总: 113/113 通过 ===
+

@@ -1,0 +1,112 @@
+{
+ "title": "答案越界测试",
+ "source_desc": "合成测试材料（good.pptx/good.docx/notes.md），无真实用户数据",
+ "generated_date": "2026-11-12",
+ "manifest": "manifest.json",
+ "topics": [
+  {
+   "id": "T1",
+   "name": "栈与队列"
+  },
+  {
+   "id": "T2",
+   "name": "线性表"
+  },
+  {
+   "id": "T3",
+   "name": "树与遍历"
+  }
+ ],
+ "questions": [
+  {
+   "id": "Q1",
+   "type": "single",
+   "difficulty": "易",
+   "topic": "栈与队列",
+   "topic_id": "T1",
+   "knowledge_type": "definition",
+   "source_ref": "课件第1页",
+   "source_id": "S1",
+   "segment_id": "S1:P1",
+   "source_quote": "队列是先进先出的线性表",
+   "evidence_status": "semantic-pass",
+   "stem": "队列采用哪种存取方式？",
+   "options": [
+    "先进先出",
+    "后进先出",
+    "随机访问",
+    "两端进中间出"
+   ],
+   "answer": [
+    9
+   ],
+   "explanation": "材料原文明确“队列是先进先出的线性表”，故选A。B 是栈的特点，C 是顺序表特点。"
+  },
+  {
+   "id": "Q2",
+   "type": "judge",
+   "difficulty": "易",
+   "topic": "栈与队列",
+   "topic_id": "T1",
+   "knowledge_type": "property",
+   "source_ref": "课件第2页",
+   "source_id": "S1",
+   "segment_id": "S1:P2",
+   "source_quote": "堆栈是后进先出的线性表",
+   "evidence_status": "semantic-pass",
+   "stem": "栈是后进先出的线性表。",
+   "options": [
+    "正确",
+    "错误"
+   ],
+   "answer": [
+    0
+   ],
+   "explanation": "材料原文即“堆栈是后进先出的线性表”，说法正确。"
+  },
+  {
+   "id": "Q3",
+   "type": "multiple",
+   "difficulty": "中",
+   "topic": "树与遍历",
+   "topic_id": "T3",
+   "knowledge_type": "process",
+   "source_ref": "笔记",
+   "source_id": "S3",
+   "segment_id": "S3:B5",
+   "source_quote": "先序遍历顺序为根左右，中序为左根右，后序为左右根",
+   "evidence_status": "needs-review",
+   "verification_notes": "三种遍历顺序易混淆，建议使用者对照教材确认",
+   "stem": "下列关于二叉树遍历顺序的说法，正确的有：",
+   "options": [
+    "先序：根左右",
+    "中序：左根右",
+    "后序：根左右",
+    "后序：左右根"
+   ],
+   "answer": [
+    0,
+    1,
+    3
+   ],
+   "explanation": "由笔记原文：先序根左右、中序左根右、后序左右根；C 项后序写成根左右错误。"
+  },
+  {
+   "id": "Q4",
+   "type": "short",
+   "difficulty": "中",
+   "topic": "线性表",
+   "topic_id": "T2",
+   "knowledge_type": "comparison",
+   "source_ref": "讲义段落",
+   "source_id": "S2",
+   "segment_id": "S2:B3",
+   "source_quote": "顺序表支持随机访问，链表支持高效插入删除",
+   "evidence_status": "semantic-pass",
+   "stem": "请对比顺序表与链表各自的优势。",
+   "options": [],
+   "answer": "①顺序表支持随机访问；②链表支持高效插入删除。",
+   "explanation": "评分要点：答到随机访问（顺序表）与插入删除效率（链表）两个要点即可。"
+  }
+ ]
+}

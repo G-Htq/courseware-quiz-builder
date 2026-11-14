@@ -1,0 +1,23 @@
+{
+ "title": "非法图片",
+ "source_desc": "d",
+ "questions": [
+  {
+   "id": "Q9",
+   "type": "single",
+   "difficulty": "易",
+   "topic": "t",
+   "source_ref": "x",
+   "stem": "正常题目占位？",
+   "options": [
+    "a",
+    "b"
+   ],
+   "answer": [
+    0
+   ],
+   "explanation": "占位解析长度足够的要求是十个字符",
+   "image": "data:application/octet-stream;base64,AAAA"
+  }
+ ]
+}

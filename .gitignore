@@ -1,0 +1,26 @@
+# 缓存与临时文件
+__pycache__/
+*.py[cod]
+*.pyo
+.temp/
+
+# 测试生成产物（可重新生成，不入库）
+tests/e2e-auto/
+tests/out/
+tests/out2/
+tests/out3/
+tests/imgs-auto/
+
+# 系统与办公软件临时文件
+~$*
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# 本地虚拟环境
+.venv/
+venv/
+
+# 编辑器
+.vscode/
+.idea/
