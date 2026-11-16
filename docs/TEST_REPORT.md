@@ -1,4 +1,4 @@
-# 课件智练 v2.2——测试与质量验收报告
+# 点课成题-课件刷题工坊 v2.2——测试与质量验收报告
 
 > 测试日期：2026-11-13 ｜ 环境：Windows 11 + PowerShell 5.1 + Python 3.12.13（核心功能仅标准库；
 > PDF 解析运次借助临时目录内 pypdf）｜ 浏览器：Playwright Chromium v24（本地 HTTP 服务，

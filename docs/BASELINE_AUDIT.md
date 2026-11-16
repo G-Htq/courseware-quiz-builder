@@ -1,4 +1,4 @@
-# 课件智练 v2.0 基线审计报告（BASELINE_AUDIT）
+# 点课成题-课件刷题工坊 v2.0 基线审计报告（BASELINE_AUDIT）
 
 > 审计对象：`courseware-quiz-builder` v1（提交于星辰杯初版，含 11-11 图片能力升级）
 > 审计时间：2026-11-12

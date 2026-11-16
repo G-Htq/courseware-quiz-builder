@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""run_tests.py - 课件智练 v2.2 自动化测试套件（聚合入口）。
+"""run_tests.py - 点课成题-课件刷题工坊 v2.2 自动化测试套件（聚合入口）。
 
 运行方式:
   python tests/run_tests.py          # 全部测试

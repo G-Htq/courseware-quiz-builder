@@ -10,7 +10,7 @@
 | 技能结构校验 | `Skill is valid!`（quick_validate.py，目录参数） | 本机实测输出 |
 | 注册 API 调用 | `INFO: Register success`（add_skill_remote.py，SKILL.md 路径） | 本机实测输出 |
 | 注册目录一致性 | 6 文件与开发事实源 SHA-256 全部 SAME | 本机实测输出 |
-| 交付包 | dist/courseware-quiz-builder-v2.2.zip：6 文件 / 72,119 字节 / 正斜杠条目 | 本机实测输出 |
+| 交付包 | dist/courseware-quiz-builder-v2.2.zip：6 文件 / 72,367 字节 / 正斜杠条目 | 本机实测输出 |
 | 安全扫描 | claw_scan：0 高风险（7 项中风险为本机开发端口、3 项低风险为子目录误报） | 扫描报告 |
 | 自动化与 E2E | 113/113 用例、32 场景浏览器 E2E（本地 HTTP，非 file://） | TEST_REPORT.md |
 
@@ -28,7 +28,7 @@
 ## 三、人工验收清单（在 TeleAgent 桌面端执行）
 
 **A. 技能加载**
-1. 打开技能页，确认「课件智练」可见且启用（版本应为 v2.2 内容）
+1. 打开技能页，确认「点课成题-课件刷题工坊」可见且启用（版本应为 v2.2 内容）
 2. 禁用→启用→删除→重新导入 `dist/courseware-quiz-builder-v2.2.zip`，确认可恢复
 
 **B. 触发测试（正向 ≥5，全部应命中）**

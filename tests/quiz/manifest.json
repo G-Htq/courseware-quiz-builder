@@ -1,12 +1,12 @@
 {
  "version": 2,
- "generated_at": "2026-11-14T10:50:35",
+ "generated_at": "2026-11-16T10:50:06",
  "extractor": "extract_text.py v2",
  "sources": [
   {
    "source_id": "S1",
    "filename": "good.pptx",
-   "sha256": "f34ef3dc4b9c8de312f878e815d704154ea963b792bca613fa33710e45177b29",
+   "sha256": "745bb17019259b5bd5c14775d919841cf2e91cbdc88e8903c9c54a6187ce1015",
    "size_bytes": 3029,
    "format": "pptx",
    "status": "ok",
@@ -55,7 +55,7 @@
   {
    "source_id": "S2",
    "filename": "good.docx",
-   "sha256": "8c192188b8aa002e9fdb2f8c2cb2eb28a6d03098d38a05f980b3e9a0110407b6",
+   "sha256": "e36ade980e4eb75b910bd46525ca89329a1876b1c50ca1596387eaf46cce4ef9",
    "size_bytes": 1234,
    "format": "docx",
    "status": "ok",

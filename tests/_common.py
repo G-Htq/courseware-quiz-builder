@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""_common.py - 课件智练 v2.1/v2.2 测试套件共享工具：路径常量、子进程运行、夹具准备。
+"""_common.py - 点课成题-课件刷题工坊 v2.1/v2.2 测试套件共享工具：路径常量、子进程运行、夹具准备。
 
 全部材料为合成测试文件（make_fixtures.py / make_edge_fixtures.py /
 make_quiz_fixtures.py 生成），不含真实用户数据。

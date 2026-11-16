@@ -1,10 +1,11 @@
-# 课件智练 v2.2 最终验收报告
+# 点课成题-课件刷题工坊 v2.2 最终验收报告
 
-> 日期：2026-11-13（2026-11-14 补充提交审核）｜ 对象：courseware-quiz-builder v2.2（质量闭环版）
+> 日期：2026-11-13（2026-11-14 提交审核补充；2026-11-16 全套更名重打包）｜ 对象：courseware-quiz-builder v2.2（质量闭环版）
 > 验收依据：真机重跑 + 独立复核（隔离上下文）+ 真实材料评测 + 发布链实测
 > **结论：CONDITIONAL（工程口径）→ 初赛提交包 READY（2026-11-14，见 docs/SUBMISSION_AUDIT.md）** ——
 > 代码/测试/本地链路全部通过；L3 TeleAgent 平台侧因本环境无桌面客户端保持 NOT_VERIFIED，需按人工清单完成后再宣称平台验收通过；
-> 提交物层面（ZIP 冻结一致 + Word ≤500 字含平台水印口径）已于 2026-11-14 实测达标。
+> 提交物层面（ZIP 一致 + Word ≤500 字含平台水印口径）已于 2026-11-14 实测达标；
+> 2026-11-16 按用户决策全套更名为「点课成题-课件刷题工坊」并重走发布链（113/113 重跑通过，详见 SUBMISSION_AUDIT 第十二节）。
 
 ## 1. 修复的问题（可验证）
 
@@ -74,9 +75,9 @@
 ## 8. 交付路径
 
 - 技能包：`F:\Project\新建文件夹\课件智练v2\dist\courseware-quiz-builder-v2.2.zip`
-  （6 文件 / 72,119 字节 / 正斜杠）
+  （6 文件 / 72,367 字节 / 正斜杠）
 - 技能说明 Word：`F:\Project\新建文件夹\课件智练v2\技能说明（500字内）.docx`
-  （2026-11-14 提交审核口径：生成内容 442 字符 + 平台 AIGC 水印约 48 字符 ≈ 490 ≤ 500，最严“全字符”口径实测达标；水印为平台注入，按规范保留）
+  （2026-11-16 更名重生成：生成内容 434 字符 + 平台 AIGC 水印约 48 字符 ≈ 482 ≤ 500，实测达标；水印为平台注入，按规范保留）
 - 注册目录：`$env:TELEAGENT_CONFIG_DIR\skills\courseware-quiz-builder`（与 ZIP 内容一致）
 - 全部文档：`课件智练v2\README.md` + `docs\`（TEST_REPORT / REAL_MATERIAL_EVAL /
   PLATFORM_ACCEPTANCE / REVIEW_REPORT / ARCHITECTURE / SCREENPLAY / CHANGELOG / ORIGINALITY /

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""make_fixtures.py - 课件智练 v2 测试夹具生成器（全部合成数据，不含真实用户隐私）
+"""make_fixtures.py - 点课成题-课件刷题工坊 v2 测试夹具生成器（全部合成数据，不含真实用户隐私）
 
 生成：
   materials/good.pptx     3页（含 xml:space 属性 <a:t>、表格、图片、演示顺序与文件名序不同）

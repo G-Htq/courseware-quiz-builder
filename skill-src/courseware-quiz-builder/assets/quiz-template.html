@@ -181,7 +181,7 @@
 <body>
 <header>
   <div class="wrap">
-    <div class="crumb" id="crumb" onclick="goHome()">课件智练</div>
+    <div class="crumb" id="crumb" onclick="goHome()">点课成题-课件刷题工坊</div>
     <h1 id="quiz-title">刷题页</h1>
     <div class="chips" id="quiz-meta"></div>
   </div>
@@ -198,7 +198,7 @@
     <section id="view"></section>
   </div>
 </main>
-<footer>由「课件智练」生成 · 单文件离线运行 · 答题记录仅保存在本机浏览器，可导出备份</footer>
+<footer>由「点课成题-课件刷题工坊」生成 · 单文件离线运行 · 答题记录仅保存在本机浏览器，可导出备份</footer>
 
 <script>
 var QUIZ = __QUIZ_DATA__;
@@ -522,11 +522,11 @@ function goHome() {
   window.scrollTo(0, 0);
 }
 function crumbText() {
-  if (view === "quiz") return "课件智练 › " + (session ? sessionTitle() : "刷题");
-  if (view === "results") return "课件智练 › 成绩与解析";
-  if (view === "wrong") return "课件智练 › 错题中心";
-  if (view === "report") return "课件智练 › 学习报告";
-  return "课件智练";
+  if (view === "quiz") return "点课成题-课件刷题工坊 › " + (session ? sessionTitle() : "刷题");
+  if (view === "results") return "点课成题-课件刷题工坊 › 成绩与解析";
+  if (view === "wrong") return "点课成题-课件刷题工坊 › 错题中心";
+  if (view === "report") return "点课成题-课件刷题工坊 › 学习报告";
+  return "点课成题-课件刷题工坊";
 }
 function sessionTitle() {
   if (!session) return "";
