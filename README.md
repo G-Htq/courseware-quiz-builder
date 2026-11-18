@@ -1,7 +1,7 @@
-﻿# 点课成题-课件刷题工坊——AI课件出题与智能复习 Skill（v2.1）
+﻿# 点课成题-课件刷题工坊——AI课件出题与智能复习 Skill（v2.2）
 
 > 九江市高校首届"星辰杯"TeleAgent 智能体应用创新大赛 · 学习科创类参赛作品
-> 技能标识：`courseware-quiz-builder` ｜ 显示名称：点课成题-课件刷题工坊 ｜ 版本：v2.1（质量门禁版）
+> 技能标识：`courseware-quiz-builder` ｜ 显示名称：点课成题-课件刷题工坊 ｜ 版本：v2.2（证据核验与发布门禁）
 
 ## 这是什么
 
@@ -110,4 +110,3 @@ skill-src/courseware-quiz-builder/      # 技能本体（dist ZIP 即此目录�
   详见 `docs/REAL_MATERIAL_EVAL.md`
 - 安全扫描 0 高风险；详见 `docs/TEST_REPORT.md`
 
-> AI生成
